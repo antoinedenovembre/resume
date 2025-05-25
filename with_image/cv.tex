@@ -10,6 +10,7 @@
     footskip=1.0 cm, % seperation between body and footer
     % showframe % for debugging 
 ]{geometry} % for adjusting page geometry
+\usepackage{graphicx} % for including images
 \usepackage{titlesec} % for customizing section titles
 \usepackage{tabularx} % for making tables with fixed width columns
 \usepackage{array} % tabularx requires this
@@ -33,6 +34,7 @@
 \usepackage{paracol} % for two and three column entries
 \usepackage{ifthen} % for conditional statements
 \usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{tikz} % for creating graphics and diagrams
 \usepackage{iftex} % check if engine is pdflatex, xetex or luatex
 
 % Ensure that generate pdf is machine readable/ATS parsable:
@@ -159,40 +161,55 @@
 
     \placelastupdatedtext
     \begin{header}
-        \textbf{\fontsize{24 pt}{24 pt}\selectfont Antoine Duteyrat}
+    \begin{tabular}{@{} m{2.5cm}  m{\dimexpr\textwidth-2.5cm}@{} }
+        % left column: photo
+        \begin{tikzpicture} 
+            \begin{scope}
+                \clip [rounded corners=.25cm] (0,0) rectangle coordinate (centerpoint) (2.5,3.5cm); 
+                \node [inner sep=0pt] at (centerpoint) {\includegraphics[width=2.5cm]{images/photo.jpg}}; 
+            \end{scope}
+        \end{tikzpicture}
+        &
+        % right column: name + contact
+        \begin{minipage}[t]{\linewidth}
+            \vspace*{-1.2cm} 
+            \raggedright
+            \setlength{\emergencystretch}{2em}
+            \textbf{\fontsize{24pt}{24pt}\selectfont Antoine Duteyrat}
 
-        \vspace{0.3 cm}
+            \vspace{0.6 cm}
 
-        \normalsize
-        \mbox{{\color{black}\footnotesize\faMapMarker*}\hspace*{0.13cm}Saint-Étienne}%
-        \kern 0.25 cm%
-        \AND%
-        \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{mailto:aduteyrat@gmail.com}{\color{black}{\footnotesize\faEnvelope[regular]}\hspace*{0.13cm}aduteyrat@gmail.com}}%
-        \kern 0.25 cm%
-        \AND%
-        \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{tel:+33-06-30-33-98-18}{\color{black}{\footnotesize\faPhone*}\hspace*{0.13cm}06 30 33 98 18}}%
-        \kern 0.25 cm%
-        \AND%
-        \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{https://antoinedenovembre.com/}{\color{black}{\footnotesize\faLink}\hspace*{0.13cm}antoinedenovembre.com}}%
-        \kern 0.25 cm%
-        \AND%
-        \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{https://linkedin.com/in/antoine-duteyrat/}{\color{black}{\footnotesize\faLinkedinIn}\hspace*{0.13cm}LinkedIn}}%
-        \kern 0.25 cm%
-        \AND%
-        \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{https://github.com/antoinedenovembre}{\color{black}{\footnotesize\faGithub}\hspace*{0.13cm}antoinedenovembre}}%
+            \normalsize
+            \mbox{{\color{black}\footnotesize\faMapMarker*}\hspace*{0.13cm}Saint-Étienne}%
+            \kern 0.25 cm%
+            \AND%
+            \kern 0.25 cm%
+            \mbox{\hrefWithoutArrow{mailto:aduteyrat@gmail.com}{\color{black}{\footnotesize\faEnvelope[regular]}\hspace*{0.13cm}aduteyrat@gmail.com}}%
+            \kern 0.25 cm%
+            \AND%
+            \kern 0.25 cm%
+            \mbox{\hrefWithoutArrow{tel:+33-06-30-33-98-18}{\color{black}{\footnotesize\faPhone*}\hspace*{0.13cm}06 30 33 98 18}}%
+            \kern 0.25 cm%
+            \AND%
+            \kern 0.25 cm%
+            \mbox{\hrefWithoutArrow{https://antoinedenovembre.com/}{\color{black}{\footnotesize\faLink}\hspace*{0.13cm}antoinedenovembre.com}}%
+            \kern 0.25 cm%
+            \AND%
+            \kern 0.25 cm%
+            \mbox{\hrefWithoutArrow{https://linkedin.com/in/antoine-duteyrat/}{\color{black}{\footnotesize\faLinkedinIn}\hspace*{0.13cm}LinkedIn}}%
+            \kern 0.25 cm%
+            \AND%
+            \kern 0.25 cm%
+            \mbox{\hrefWithoutArrow{https://github.com/antoinedenovembre}{\color{black}{\footnotesize\faGithub}\hspace*{0.13cm}antoinedenovembre}}%
+        \end{minipage}
+    \end{tabular}
     \end{header}
-
-    \vspace{0.3 cm - 0.3 cm}
 
 % ======================================================================
 % ============================= EDUCATION ==============================
 % ======================================================================
-
+    
+    \vspace*{-0.3cm} 
     \section{Education}
         \begin{twocolentry}{
 			\textbf{Saint-Étienne, France}
@@ -275,7 +292,7 @@
 			\textit{Aug 2024 – Oct 2024}}
 			\textbf{NTNU Gjøvik}
 
-			\textit{Image processing and engineering intern}
+			\textit{Image processing for detection and tracking intern}
         \end{twocolentry}
 
         \vspace{0.2 cm}
