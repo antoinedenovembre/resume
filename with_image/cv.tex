@@ -163,11 +163,14 @@
     \begin{header}
     \begin{tabular}{@{} m{2.5cm}  m{\dimexpr\textwidth-2.5cm}@{} }
         % left column: photo
-        \begin{tikzpicture} 
-            \begin{scope}
-                \clip [rounded corners=.25cm] (0,0) rectangle coordinate (centerpoint) (2.5,3.5cm); 
-                \node [inner sep=0pt] at (centerpoint) {\includegraphics[width=2.5cm]{images/photo.jpg}}; 
-            \end{scope}
+        \begin{tikzpicture}
+            \node [inner sep=0pt] at (0,0) {\includegraphics[width=2.5cm]{images/photo.jpg}};
+            \draw [white, rounded corners=0.1cm, line width=0.1cm] 
+                (current bounding box.north west) -- 
+                (current bounding box.north east) --
+                (current bounding box.south east) --
+                (current bounding box.south west) -- cycle
+                ;
         \end{tikzpicture}
         &
         % right column: name + contact
@@ -209,7 +212,7 @@
 % ============================= EDUCATION ==============================
 % ======================================================================
     
-    \vspace*{-0.3cm} 
+    \vspace*{-0.4cm} 
     \section{Education}
         \begin{twocolentry}{
 			\textbf{Saint-Étienne, France}
