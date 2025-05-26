@@ -1,2 +1,5 @@
-# MACOS
+# MacOS
 .DS_Store
+
+# LaTeX
+*.gz
