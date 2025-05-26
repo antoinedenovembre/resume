@@ -1,4 +1,4 @@
-\documentclass[10pt, letterpaper]{article}
+\documentclass[10pt, a4paper]{article}
 
 % Packages:
 \usepackage[
@@ -56,16 +56,24 @@
 
 \titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
 
-\titlespacing{\section}{
-    % left space:
-    -1pt
-}{
-    % top space:
-    0.7 cm
-}{
-    % bottom space:
-    0.7 cm
-} % section title spacing
+% spacing around section titles
+\titlespacing*{\section}
+  {0pt}                              % left margin
+  {3.0ex plus .5ex minus .2ex}       % before-title (rubber)
+  {3.0ex plus .2ex minus .2ex}       % after-title  (rubber)
+
+% paragraph skip
+\setlength{\parskip}{1em plus 0.1em minus 0.1em}
+
+% itemize/list spacing
+\usepackage{enumitem}
+\setlist[itemize]{
+  topsep=0.2em plus 0.1em minus 0.1em,
+  partopsep=0pt,
+  parsep=0.1em plus 0.05em minus 0.05em,
+  itemsep=0.1em plus 0.1em minus 0.05em,
+  leftmargin=0.4cm
+}
 
 \renewcommand\labelitemi{$\circ$} % custom bullet points
 \newenvironment{highlights}{
@@ -110,6 +118,7 @@
 }{
     \switchcolumn \raggedleft \secondColumn
     \end{paracol}
+    \vspace{0.24em} % Add space at the bottom of a twocolentry
     \endonecolentry
 } % new environment for two column entries
 
@@ -154,6 +163,7 @@
     }
     \newsavebox\ANDbox
     \sbox\ANDbox{}
+    \flushbottom
 
 % ======================================================================
 % =============================== HEADER ===============================
@@ -174,13 +184,11 @@
         \end{tikzpicture}
         &
         % right column: name + contact
+        \vspace*{-1.5cm}
         \begin{minipage}[t]{\linewidth}
-            \vspace*{-1.2cm} 
             \raggedright
             \setlength{\emergencystretch}{2em}
             \textbf{\fontsize{24pt}{24pt}\selectfont Antoine Duteyrat}
-
-            \vspace{0.6 cm}
 
             \normalsize
             \mbox{{\color{black}\footnotesize\faMapMarker*}\hspace*{0.13cm}Saint-Étienne}%
@@ -212,18 +220,17 @@
 % ============================= EDUCATION ==============================
 % ======================================================================
     
-    \vspace*{-0.5cm}
     \section{Education}
-        \begin{twocolentry}{
-			\textbf{Saint-Étienne, France}
-
-			\textit{Sept 2022 – Now}}
-            \textbf{Télécom Saint-Étienne}
-
-            \textit{Master’s degree in Image Processing and Photonics}
+       \begin{twocolentry}{
+            \textbf{Saint-Étienne, France}\\
+            \textit{Sept 2022 – Now}
+            }{
+            \textbf{Télécom Saint-Étienne}\\
+            \textit{Master’s degree in Image Processing and Photonics}%
+            }
         \end{twocolentry}
 
-        \vspace{0.2 cm}
+
         \begin{onecolentry}
             \begin{highlights}
                 \item \textbf{Relevant coursework:} Computer Vision, Machine Learning, Deep Learning, Image Processing
@@ -231,34 +238,30 @@
             \end{highlights}
         \end{onecolentry}
 
-		\vspace{0.6 cm}
 		\begin{twocolentry}{
-			\textbf{Chicoutimi, Canada}
-
-			\textit{Jan 2022 – May 2022}}
-            \textbf{Université du Québec à Chicoutimi}
-
+			\textbf{Chicoutimi, Canada} \\
+			\textit{Jan 2022 – May 2022}
+            }{
+            \textbf{Université du Québec à Chicoutimi} \\
             \textit{Exchange semester in Computer Science}
+            }
         \end{twocolentry}
 
-        \vspace{0.2 cm}
         \begin{onecolentry}
             \begin{highlights}
                 \item \textbf{Relevant coursework:} Calculus II, Android development, Data Mining
             \end{highlights}
         \end{onecolentry}
 
-		\vspace{0.6 cm}
 		\begin{twocolentry}{
-			\textbf{Clermont-Ferrand, France}
-
-			\textit{Sept 2020 – July 2022}}
-            \textbf{Université Clermont Auvergne}
-
+			\textbf{Clermont-Ferrand, France} \\
+			\textit{Sept 2020 – July 2022}
+            }{
+            \textbf{Université Clermont Auvergne} \\
             \textit{Associate's degree in Computer Science}
+            }
         \end{twocolentry}
 
-        \vspace{0.2 cm}
         \begin{onecolentry}
             \begin{highlights}
                 \item \textbf{Relevant coursework:} OOP, Computer Networking, AI Modelling, Database management
@@ -271,15 +274,14 @@
 
     \section{Experience}
         \begin{twocolentry}{
-			\textbf{Brignais, France}
-
-			\textit{Sept 2022 – Now}}
-            \textbf{Safety Tech}
-
+			\textbf{Brignais, France} \\
+			\textit{Sept 2022 – Now}
+            }{
+            \textbf{Safety Tech} \\
             \textit{Image processing and engineering apprentice}
+            }
         \end{twocolentry}
 
-        \vspace{0.2 cm}
         \begin{onecolentry}
             \begin{highlights}
                 \item Used \textbf{AGILE Scrum} methodology for embedded software development
@@ -288,17 +290,15 @@
             \end{highlights}
         \end{onecolentry}
 
-		\vspace{0.6 cm}
         \begin{twocolentry}{
-			\textbf{Gjøvik, Norway}
-
-			\textit{Aug 2024 – Oct 2024}}
-			\textbf{NTNU Gjøvik}
-
+			\textbf{Gjøvik, Norway} \\
+			\textit{Aug 2024 – Oct 2024}
+            }{
+			\textbf{NTNU Gjøvik} \\
 			\textit{Image processing for detection and tracking intern}
+            }
         \end{twocolentry}
 
-        \vspace{0.2 cm}
         \begin{onecolentry}
             \begin{highlights}
                 \item Trained and evaluated \textbf{EfficientDet} and \textbf{YOLOv8} for animal detection in pens via \textbf{Ultralytics} and \textbf{TensorFlow}
@@ -315,13 +315,9 @@
             \textbf{Languages:} French (native), English (C1, TOEIC 990/990) 
         \end{onecolentry}
 
-        \vspace{0.2 cm}
-
         \begin{onecolentry}
             \textbf{Technical Skills:} C, C++, Computer Networking, Machine and Deep Learning in Python (Ultralytics, TensorFlow), Web programming, Image processing, SCRUM project management
         \end{onecolentry}
-
-		\vspace{0.2 cm}
 
         \begin{onecolentry}
             \textbf{Interests:} Technology Trends, Teamwork, Discovering new topics and participating in innovative projects
