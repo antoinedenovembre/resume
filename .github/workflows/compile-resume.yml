@@ -1,0 +1,47 @@
+name: Compile Resume
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Compile resume with image
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: resume.tex
+          working_directory: with_image
+          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
+
+      - name: Compile resume without image
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: resume.tex
+          working_directory: no_image
+          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
+
+      - name: Upload PDF artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: resume-pdfs
+          path: |
+            with_image/resume.pdf
+            no_image/resume.pdf
+          retention-days: 30
+
+      - name: Create Release on Tag
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            with_image/resume.pdf
+            no_image/resume.pdf
+          token: ${{ secrets.GITHUB_TOKEN }}
