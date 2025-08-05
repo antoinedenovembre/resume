@@ -60,6 +60,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Prepare files for release
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          # Copy and rename PDFs to avoid name conflicts
+          cp with_image/resume.pdf resume-with-image.pdf
+          cp no_image/resume.pdf resume-no-image.pdf
+          ls -la *.pdf
+
       - name: Create Latest Release
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: softprops/action-gh-release@v1
@@ -74,17 +82,22 @@ jobs:
             - `resume-no-image.pdf` - Resume without headshot
 
             **Build date:** ${{ github.event.head_commit.timestamp }}
-          files: |
-            with_image/resume.pdf
-            no_image/resume.pdf
+          files: resume-with-image.pdf,resume-no-image.pdf
+          draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Tagged Release
         if: startsWith(github.ref, 'refs/tags/') && github.ref != 'refs/tags/latest'
+        run: |
+          # Copy and rename PDFs for tagged releases too
+          cp with_image/resume.pdf resume-with-image.pdf
+          cp no_image/resume.pdf resume-no-image.pdf
+
+      - name: Upload Tagged Release
+        if: startsWith(github.ref, 'refs/tags/') && github.ref != 'refs/tags/latest'
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            with_image/resume.pdf
-            no_image/resume.pdf
+          files: resume-with-image.pdf,resume-no-image.pdf
+          draft: false
           token: ${{ secrets.GITHUB_TOKEN }}

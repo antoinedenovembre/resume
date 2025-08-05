@@ -1,7 +1,7 @@
 # Resume Repository
 
 [![Compile Resume](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml/badge.svg)](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml)
-[![Latest Release](https://img.shields.io/github/v/release/antoinedenovembre/resume?label=Latest%20PDFs)](https://github.com/antoinedenovembre/resume/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/release/antoinedenovembre/resume?include_prereleases&label=Latest%20PDFs)](https://github.com/antoinedenovembre/resume/releases/latest)
 
 This repository contains my resume source LaTeX files, which are automatically compiled to PDF format using GitHub Actions.
 
