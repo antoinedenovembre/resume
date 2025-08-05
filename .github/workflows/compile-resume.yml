@@ -31,6 +31,17 @@ jobs:
           working_directory: no_image
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
 
+      - name: Debug - List generated files
+        run: |
+          echo "=== Root directory ==="
+          ls -la
+          echo "=== with_image directory ==="
+          ls -la with_image/
+          echo "=== no_image directory ==="
+          ls -la no_image/
+          echo "=== Find all PDF files ==="
+          find . -name "*.pdf" -type f
+
       - name: Upload PDF artifacts
         uses: actions/upload-artifact@v4
         with:
