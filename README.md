@@ -3,14 +3,14 @@
 [![Compile resume](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml/badge.svg)](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml)
 [![Latest resume](https://img.shields.io/github/v/release/antoinedenovembre/resume?include_prereleases&label=Latest%20PDFs)](https://github.com/antoinedenovembre/resume/releases/latest)
 
-This repository contains my resume source LaTeX files, which are automatically compiled to PDF format using GitHub Actions.
+This repository contains my resume source LaTeX files built with a modular architecture, automatically compiled to PDF format using GitHub Actions.
 
 ## Resume Versions
 
 The resume is available in two versions:
 
-- **With Photo** (`with_image/`) - Professional resume including headshot
-- **Without Photo** (`no_image/`) - Clean resume without personal photo
+- **With Photo** (`resume_with_image.pdf`) - Professional resume including headshot
+- **Without Photo** (`resume_no_image.pdf`) - Clean resume without personal photo
 
 ## Quick Access
 
@@ -27,18 +27,27 @@ The resume is available in two versions:
 ### Building Locally
 
 ```bash
-# Build both versions
+# Build both versions (recommended)
 make all
 
-# Build only version with photo
+# Build only version with photo  
 make with_image
 
 # Build only version without photo
 make no_image
 
-# Clean build artifacts
+# Clean auxiliary files (keeps PDFs)
 make clean
+
+# Clean all generated files including PDFs
+make clean-all
 ```
+
+### Development Notes
+- All source files are organized in the `src/` directory
+- Built PDFs are generated in the `build/` directory  
+- The build process automatically cleans auxiliary LaTeX files
+- Modular architecture allows easy customization of individual components
 
 ## Automated Compilation
 
@@ -54,19 +63,38 @@ Every push to the `main` branch automatically:
 ```
 resume/
 ├── .github/workflows/
-│   └── compile-resume.yml      # CI/CD pipeline
-├── with_image/
-│   ├── resume.tex             # LaTeX source with photo
-│   ├── resume.pdf             # Compiled PDF
-│   └── images/
-│       └── photo.jpg          # Profile photo
-├── no_image/
-│   ├── resume.tex             # LaTeX source without photo
-│   └── resume.pdf             # Compiled PDF
-├── resume_body.tex            # Shared resume content
+│   └── compile-resume.yml      # CI/CD pipeline for automated builds
+├── assets/
+│   └── photo.jpg              # Profile photo asset
+├── build/
+│   ├── resume_with_image.tex   # Main LaTeX file with photo
+│   ├── resume_with_image.pdf   # Compiled PDF with photo
+│   ├── resume_no_image.tex     # Main LaTeX file without photo
+│   └── resume_no_image.pdf     # Compiled PDF without photo
+├── src/
+│   ├── config/
+│   │   ├── packages.tex        # LaTeX package imports and configuration
+│   │   ├── style.tex           # Styling definitions and formatting
+│   │   └── commands.tex        # Custom LaTeX commands
+│   ├── content/
+│   │   └── resume_content.tex  # Main resume content (shared)
+│   └── layout/
+│       ├── header_with_image.tex    # Header layout with photo
+│       └── header_no_image.tex      # Header layout without photo
 ├── Makefile                   # Build automation
+├── .gitignore                 # Git ignore rules
 └── README.md                  # This file
 ```
+
+## Modular Architecture
+
+The project uses a modular LaTeX architecture for better maintainability:
+
+- **Configuration Layer** (`src/config/`): Package imports, styling, and custom commands
+- **Content Layer** (`src/content/`): Actual resume content (shared between versions)  
+- **Layout Layer** (`src/layout/`): Different header layouts for photo variants
+- **Build Layer** (`build/`): Main document files that combine all modules
+- **Assets** (`assets/`): Static resources like photos
 
 ## Versioning
 
@@ -81,14 +109,52 @@ git push origin v1.0
 
 ## LaTeX Packages Used
 
-- `geometry` - Page layout and margins
-- `graphicx` - Image inclusion (for photo version)
+### Core Packages
+- `geometry` - Page layout and margins configuration
 - `titlesec` - Section title customization
-- `tabularx` - Advanced table formatting
-- `xcolor` - Color definitions
-- `enumitem` - List customization
-- `fontawesome5` - Icons
-- `hyperref` - Links and metadata
+- `tabularx` & `array` - Advanced table formatting
+- `xcolor` - Color definitions and primary color scheme
+- `enumitem` - List customization and styling
+- `fontawesome5` - Professional icons integration
+- `hyperref` & `bookmark` - PDF metadata, links, and navigation
+
+### Layout & Formatting
+- `amsmath` - Mathematical expressions support
+- `eso-pic` - Floating text positioning
+- `calc` - Length calculations
+- `lastpage` - Total page count reference
+- `changepage` - Adjustable width environments
+- `paracol` - Multi-column layout support
+- `needspace` - Intelligent page break management
+
+### Conditional Packages (Photo Version Only)
+- `graphicx` - Image inclusion for profile photo
+- `tikz` - Graphics and diagrams creation
+
+### Engine Compatibility
+- `iftex` - LaTeX engine detection
+- `ifthen` - Conditional statements
+- PDF/A compatibility packages for ATS parsing
+
+## Advanced Features
+
+### Conditional Compilation
+The project uses intelligent conditional compilation:
+- Photo-related packages (`graphicx`, `tikz`) are only loaded for the image version
+- Keeps the no-image version lightweight and faster to compile
+- Maintains ATS (Applicant Tracking System) compatibility
+
+### PDF Optimization
+- Machine-readable PDF generation for ATS parsing
+- Unicode character mapping for text extraction
+- Proper PDF metadata and navigation bookmarks
+- Color-coded links with professional styling
+
+### Build System
+- Automated cleanup of auxiliary LaTeX files
+- Parallel compilation support via Makefile
+- Consistent output in `build/` directory
+- Development-friendly with modular source organization
 
 ## Contact
 
@@ -96,4 +162,5 @@ For any questions about this resume or potential opportunities, please reach out
 
 ---
 
-*This repository uses GitHub Actions for automated LaTeX compilation and release management.*
+*This repository uses GitHub Actions for automated LaTeX compilation and release management.*  
+*Last updated: August 2025 - Modular architecture implementation*
