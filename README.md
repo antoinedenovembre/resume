@@ -7,10 +7,15 @@ This repository contains my resume source LaTeX files built with a modular archi
 
 ## Resume Versions
 
-The resume is available in two versions:
+The resume is available in **four versions** across **two languages**:
 
+### English Versions
 - **With Photo** (`resume_with_image.pdf`) - Professional resume including headshot
 - **Without Photo** (`resume_no_image.pdf`) - Clean resume without personal photo
+
+### French Versions  
+- **With Photo** (`resume_with_image_fr.pdf`) - CV professionnel avec photo
+- **Without Photo** (`resume_no_image_fr.pdf`) - CV épuré sans photo
 
 ## Quick Access
 
@@ -27,14 +32,20 @@ The resume is available in two versions:
 ### Building Locally
 
 ```bash
-# Build both versions (recommended)
+# Build all versions in both languages (recommended)
 make all
 
-# Build only version with photo  
-make with_image
+# Build all English versions (with and without photo)
+make en
 
-# Build only version without photo
-make no_image
+# Build all French versions (with and without photo)
+make fr
+
+# Build specific versions
+make with_image          # English with photo
+make no_image           # English without photo
+make with_image_fr      # French with photo
+make no_image_fr        # French without photo
 
 # Clean auxiliary files (keeps PDFs)
 make clean
@@ -48,12 +59,13 @@ make clean-all
 - Built PDFs are generated in the `build/` directory  
 - The build process automatically cleans auxiliary LaTeX files
 - Modular architecture allows easy customization of individual components
+- **Multi-language support**: English and French versions with shared configuration and styling
 
 ## Automated Compilation
 
 Every push to the `main` branch automatically:
 
-1. Compiles both resume versions
+1. Compiles all resume versions (English and French, with and without photo)
 2. Creates a "latest" release with updated PDFs
 3. Stores artifacts for 30 days
 4. Provides immediate access to latest versions
@@ -67,20 +79,27 @@ resume/
 ├── assets/
 │   └── photo.jpg              # Profile photo asset
 ├── build/
-│   ├── resume_with_image.tex   # Main LaTeX file with photo
-│   ├── resume_with_image.pdf   # Compiled PDF with photo
-│   ├── resume_no_image.tex     # Main LaTeX file without photo
-│   └── resume_no_image.pdf     # Compiled PDF without photo
+│   ├── resume_with_image.tex       # Main LaTeX file with photo (EN)
+│   ├── resume_with_image.pdf       # Compiled PDF with photo (EN)
+│   ├── resume_no_image.tex         # Main LaTeX file without photo (EN)
+│   ├── resume_no_image.pdf         # Compiled PDF without photo (EN)
+│   ├── resume_with_image_fr.tex    # Main LaTeX file with photo (FR)
+│   ├── resume_with_image_fr.pdf    # Compiled PDF with photo (FR)
+│   ├── resume_no_image_fr.tex      # Main LaTeX file without photo (FR)
+│   └── resume_no_image_fr.pdf      # Compiled PDF without photo (FR)
 ├── src/
 │   ├── config/
 │   │   ├── packages.tex        # LaTeX package imports and configuration
 │   │   ├── style.tex           # Styling definitions and formatting
 │   │   └── commands.tex        # Custom LaTeX commands
 │   ├── content/
-│   │   └── resume_content.tex  # Main resume content (shared)
+│   │   ├── resume_content.tex  # Main resume content (English)
+│   │   └── resume_content_fr.tex # Main resume content (French)
 │   └── layout/
-│       ├── header_with_image.tex    # Header layout with photo
-│       └── header_no_image.tex      # Header layout without photo
+│       ├── header_with_image.tex    # Header layout with photo (EN)
+│       ├── header_no_image.tex      # Header layout without photo (EN)
+│       ├── header_with_image_fr.tex # Header layout with photo (FR)
+│       └── header_no_image_fr.tex   # Header layout without photo (FR)
 ├── Makefile                   # Build automation
 ├── .gitignore                 # Git ignore rules
 └── README.md                  # This file
@@ -90,11 +109,18 @@ resume/
 
 The project uses a modular LaTeX architecture for better maintainability:
 
-- **Configuration Layer** (`src/config/`): Package imports, styling, and custom commands
-- **Content Layer** (`src/content/`): Actual resume content (shared between versions)  
-- **Layout Layer** (`src/layout/`): Different header layouts for photo variants
-- **Build Layer** (`build/`): Main document files that combine all modules
+- **Configuration Layer** (`src/config/`): Package imports, styling, and custom commands (shared across languages)
+- **Content Layer** (`src/content/`): Actual resume content with separate files per language
+- **Layout Layer** (`src/layout/`): Different header layouts for photo variants and languages
+- **Build Layer** (`build/`): Main document files that combine all modules for each version
 - **Assets** (`assets/`): Static resources like photos
+
+### Multi-language Support
+
+- **Shared Configuration**: All languages use the same packages, styles, and commands
+- **Language-specific Content**: Separate content files for each language (`resume_content.tex` and `resume_content_fr.tex`)
+- **Language-specific Headers**: Header files adapted for each language while maintaining the same styling
+- **Consistent Build System**: Simple `make en` and `make fr` commands to build all versions for each language
 
 ## Versioning
 

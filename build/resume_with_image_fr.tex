@@ -1,0 +1,19 @@
+\documentclass[10pt, a4paper]{article}
+
+% Define that we want to include image
+\def\includeimage{}
+
+% Load configuration files
+\input{../src/config/packages.tex}
+\input{../src/config/style.tex}
+\input{../src/config/commands.tex}
+
+\begin{document}
+    \initdocument
+
+    % Include header with image
+    \input{../src/layout/header_with_image.tex}
+    
+    % Include resume content (French version)
+    \input{../src/content/resume_content_fr.tex}
+\end{document}
