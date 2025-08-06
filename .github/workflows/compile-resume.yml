@@ -17,17 +17,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Compile resume with image
+      - name: Compile resume with image (English)
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: resume_with_image.tex
+          root_file: resume_with_image_en.tex
           working_directory: build
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
 
-      - name: Compile resume without image
+      - name: Compile resume with image (French)
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: resume_no_image.tex
+          root_file: resume_with_image_fr.tex
+          working_directory: build
+          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
+
+      - name: Compile resume without image (English)
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: resume_no_image_en.tex
+          working_directory: build
+          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
+
+      - name: Compile resume without image (French)
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: resume_no_image_fr.tex
           working_directory: build
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
 
@@ -36,8 +50,10 @@ jobs:
         with:
           name: resume-pdfs
           path: |
-            build/resume_with_image.pdf
-            build/resume_no_image.pdf
+            build/resume_with_image_en.pdf
+            build/resume_no_image_en.pdf
+            build/resume_with_image_fr.pdf
+            build/resume_no_image_fr.pdf
           retention-days: 30
 
       - name: Delete existing latest release
@@ -53,8 +69,10 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           # Copy and rename PDFs to avoid name conflicts
-          cp build/resume_with_image.pdf resume-with-image.pdf
-          cp build/resume_no_image.pdf resume-no-image.pdf
+          cp build/resume_with_image_en.pdf resume-with-image-en.pdf
+          cp build/resume_no_image_en.pdf resume-no-image-en.pdf
+          cp build/resume_with_image_fr.pdf resume-with-image-fr.pdf
+          cp build/resume_no_image_fr.pdf resume-no-image-fr.pdf
           ls -la *.pdf
 
       - name: Create Latest Release
@@ -67,11 +85,13 @@ jobs:
             Latest compiled resume PDFs from commit ${{ github.sha }}
 
             **Files included:**
-            - `resume-with-image.pdf` - Resume with headshot
-            - `resume-no-image.pdf` - Resume without headshot
+            - `resume-with-image-en.pdf` - Resume with headshot (English)
+            - `resume-no-image-en.pdf` - Resume without headshot (English)
+            - `resume-with-image-fr.pdf` - Resume with headshot (French)
+            - `resume-no-image-fr.pdf` - Resume without headshot (French)
 
             **Build date:** ${{ github.event.head_commit.timestamp }}
-          files: resume-with-image.pdf,resume-no-image.pdf
+          files: resume-with-image-en.pdf,resume-no-image-en.pdf,resume-with-image-fr.pdf,resume-no-image-fr.pdf
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -80,13 +100,15 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/') && github.ref != 'refs/tags/latest'
         run: |
           # Copy and rename PDFs for tagged releases too
-          cp build/resume_with_image.pdf resume-with-image.pdf
-          cp build/resume_no_image.pdf resume-no-image.pdf
+          cp build/resume_with_image_en.pdf resume-with-image-en.pdf
+          cp build/resume_no_image_en.pdf resume-no-image-en.pdf
+          cp build/resume_with_image_fr.pdf resume-with-image-fr.pdf
+          cp build/resume_no_image_fr.pdf resume-no-image-fr.pdf
 
       - name: Upload Tagged Release
         if: startsWith(github.ref, 'refs/tags/') && github.ref != 'refs/tags/latest'
         uses: softprops/action-gh-release@v1
         with:
-          files: resume-with-image.pdf,resume-no-image.pdf
+          files: resume-with-image-en.pdf,resume-no-image-en.pdf,resume-with-image-fr.pdf,resume-no-image-fr.pdf
           draft: false
           token: ${{ secrets.GITHUB_TOKEN }}
