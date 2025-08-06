@@ -17,7 +17,7 @@ The resume is available in two versions:
 **Latest compiled PDFs are always available here:**
 👉 [**Download Latest Resume PDFs**](https://github.com/antoinedenovembre/resume/releases/latest)
 
-## 🛠️ Local Development
+## Local Development
 
 ### Prerequisites
 
