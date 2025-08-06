@@ -20,35 +20,24 @@ jobs:
       - name: Compile resume with image
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: resume.tex
-          working_directory: with_image
+          root_file: resume_with_image.tex
+          working_directory: build
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
 
       - name: Compile resume without image
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: resume.tex
-          working_directory: no_image
+          root_file: resume_no_image.tex
+          working_directory: build
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
-
-      - name: Debug - List generated files
-        run: |
-          echo "=== Root directory ==="
-          ls -la
-          echo "=== with_image directory ==="
-          ls -la with_image/
-          echo "=== no_image directory ==="
-          ls -la no_image/
-          echo "=== Find all PDF files ==="
-          find . -name "*.pdf" -type f
 
       - name: Upload PDF artifacts
         uses: actions/upload-artifact@v4
         with:
           name: resume-pdfs
           path: |
-            with_image/resume.pdf
-            no_image/resume.pdf
+            build/resume_with_image.pdf
+            build/resume_no_image.pdf
           retention-days: 30
 
       - name: Delete existing latest release
@@ -64,8 +53,8 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           # Copy and rename PDFs to avoid name conflicts
-          cp with_image/resume.pdf resume-with-image.pdf
-          cp no_image/resume.pdf resume-no-image.pdf
+          cp build/resume_with_image.pdf resume-with-image.pdf
+          cp build/resume_no_image.pdf resume-no-image.pdf
           ls -la *.pdf
 
       - name: Create Latest Release
@@ -91,8 +80,8 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/') && github.ref != 'refs/tags/latest'
         run: |
           # Copy and rename PDFs for tagged releases too
-          cp with_image/resume.pdf resume-with-image.pdf
-          cp no_image/resume.pdf resume-no-image.pdf
+          cp build/resume_with_image.pdf resume-with-image.pdf
+          cp build/resume_no_image.pdf resume-no-image.pdf
 
       - name: Upload Tagged Release
         if: startsWith(github.ref, 'refs/tags/') && github.ref != 'refs/tags/latest'

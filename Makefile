@@ -1,25 +1,35 @@
-.PHONY: all with_image no_image clean
+.PHONY: all with_image no_image clean clean-all test
 
 LATEXMK = latexmk -pdf -interaction=nonstopmode
+BUILD_DIR = build
+SRC_DIR = src
 
 all: with_image no_image
 
+# Build resume with image using new modular structure
 with_image:
-	@echo "Building resume with headshot..."
-	@cd with_image && $(LATEXMK) resume.tex
-	@echo "Cleaning build files for with_image..."
-	@cd with_image && $(LATEXMK) -c resume.tex
+	@echo "Building resume with headshot (modular)..."
+	@cd $(BUILD_DIR) && $(LATEXMK) resume_with_image.tex
+	@echo "Cleaning build files..."
+	@cd $(BUILD_DIR) && $(LATEXMK) -c resume_with_image.tex
 
+# Build resume without image using new modular structure  
 no_image:
-	@echo "Building resume without headshot..."
-	@cd no_image && $(LATEXMK) resume.tex
-	@echo "Cleaning build files for no_image..."
-	@cd no_image && $(LATEXMK) -c resume.tex
+	@echo "Building resume without headshot (modular)..."
+	@cd $(BUILD_DIR) && $(LATEXMK) resume_no_image.tex
+	@echo "Cleaning build files..."
+	@cd $(BUILD_DIR) && $(LATEXMK) -c resume_no_image.tex
 
+# Clean auxiliary files
 clean:
 	@echo "Cleaning auxiliary files..."
-	@cd with_image && $(LATEXMK) -c resume.tex
-	@cd no_image && $(LATEXMK) -c resume.tex
+	@cd $(BUILD_DIR) && $(LATEXMK) -c resume_with_image.tex 2>/dev/null || true
+	@cd $(BUILD_DIR) && $(LATEXMK) -c resume_no_image.tex 2>/dev/null || true
 	@echo "Done."
 
-# This Makefile is used to compile the resume in both directories with and without a headshot.
+# Clean all generated files including PDFs
+clean-all: clean
+	@echo "Cleaning all generated files..."
+	@rm -f $(BUILD_DIR)/*.pdf
+	@echo "Done."
+
