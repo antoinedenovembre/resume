@@ -79,14 +79,10 @@ resume/
 ├── assets/
 │   └── photo.jpg              # Profile photo asset
 ├── build/
-│   ├── resume_with_image.tex       # Main LaTeX file with photo (EN)
-│   ├── resume_with_image.pdf       # Compiled PDF with photo (EN)
-│   ├── resume_no_image.tex         # Main LaTeX file without photo (EN)
-│   ├── resume_no_image.pdf         # Compiled PDF without photo (EN)
+│   ├── resume_with_image_en.tex       # Main LaTeX file with photo (EN)
+│   ├── resume_no_image_en.tex         # Main LaTeX file without photo (EN)
 │   ├── resume_with_image_fr.tex    # Main LaTeX file with photo (FR)
-│   ├── resume_with_image_fr.pdf    # Compiled PDF with photo (FR)
 │   ├── resume_no_image_fr.tex      # Main LaTeX file without photo (FR)
-│   └── resume_no_image_fr.pdf      # Compiled PDF without photo (FR)
 ├── src/
 │   ├── config/
 │   │   ├── packages.tex        # LaTeX package imports and configuration
