@@ -1,0 +1,88 @@
+% ======================================================================
+% ========================== STYLE CONFIGURATION =====================
+% ======================================================================
+
+% Document settings
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0cm} % set column seperation
+
+% Section title formatting
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+% Spacing around section titles
+\titlespacing*{\section}
+  {0pt}                              % left margin
+  {3.0ex plus .5ex minus .2ex}       % before-title (rubber)
+  {3.0ex plus .2ex minus .2ex}       % after-title  (rubber)
+
+% Paragraph skip
+\setlength{\parskip}{1em plus 0.1em minus 0.1em}
+
+% Itemize/list spacing
+\setlist[itemize]{
+  topsep=0.2em plus 0.1em minus 0.1em,
+  partopsep=0pt,
+  parsep=0.1em plus 0.05em minus 0.05em,
+  itemsep=0.1em plus 0.1em minus 0.05em,
+  leftmargin=0.4cm
+}
+
+% Custom bullet points
+\renewcommand\labelitemi{$\circ$}
+
+% Custom environments
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0.4 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0.2 cm + 0.00001 cm
+    }{
+        0.2 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 6 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \vspace{0.24em} % Add space at the bottom of a twocolentry
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header

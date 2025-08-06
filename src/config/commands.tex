@@ -1,0 +1,40 @@
+% ======================================================================
+% ========================= CUSTOM COMMANDS ===========================
+% ======================================================================
+
+% Date formatting
+\newcommand{\monthname}{% \monthname
+	\ifcase\month\or
+		January\or February\or March\or April\or May\or June\or
+		July\or August\or September\or October\or November\or December
+	\fi
+}%
+
+% Last updated text placement
+\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+    \put(
+        \LenToUnit{\paperwidth-2 cm-0.2 cm+0.05cm},
+        \LenToUnit{\paperheight-1.0 cm}
+    ){\vtop{{\null}\makebox[0pt][c]{
+		\small\color{gray}\textit{Last updated in \monthname\ \the\year}\hspace{\widthof{Last updated in \monthname\ \the\year}}
+    }}}%
+  }%
+}%
+
+% Save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% New command for external links with arrow icon:
+\renewcommand{\href}[2]{\hrefWithoutArrow{#1}{\ifthenelse{\equal{#2}{}}{ }{#2 }\raisebox{.15ex}{\footnotesize \faExternalLink*}}}
+
+% Document initialization commands
+\newcommand{\initdocument}{
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{}
+    \flushbottom
+}
