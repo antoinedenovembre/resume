@@ -1,18 +1,18 @@
 # Resume Repository
 
-[![Compile Resume](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml/badge.svg)](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml)
-[![Latest Release](https://img.shields.io/github/v/release/antoinedenovembre/resume?include_prereleases&label=Latest%20PDFs)](https://github.com/antoinedenovembre/resume/releases/latest)
+[![Compile resume](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml/badge.svg)](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml)
+[![Latest resume](https://img.shields.io/github/v/release/antoinedenovembre/resume?include_prereleases&label=Latest%20PDFs)](https://github.com/antoinedenovembre/resume/releases/latest)
 
 This repository contains my resume source LaTeX files, which are automatically compiled to PDF format using GitHub Actions.
 
-## 📄 Resume Versions
+## Resume Versions
 
 The resume is available in two versions:
 
 - **With Photo** (`with_image/`) - Professional resume including headshot
 - **Without Photo** (`no_image/`) - Clean resume without personal photo
 
-## 🚀 Quick Access
+## Quick Access
 
 **Latest compiled PDFs are always available here:**
 👉 [**Download Latest Resume PDFs**](https://github.com/antoinedenovembre/resume/releases/latest)
@@ -40,16 +40,16 @@ make no_image
 make clean
 ```
 
-## 🔄 Automated Compilation
+## Automated Compilation
 
 Every push to the `main` branch automatically:
 
-1. ✅ Compiles both resume versions
-2. ✅ Creates a "latest" release with updated PDFs
-3. ✅ Stores artifacts for 30 days
-4. ✅ Provides immediate access to latest versions
+1. Compiles both resume versions
+2. Creates a "latest" release with updated PDFs
+3. Stores artifacts for 30 days
+4. Provides immediate access to latest versions
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 resume/
@@ -68,7 +68,7 @@ resume/
 └── README.md                  # This file
 ```
 
-## 🏷️ Versioning
+## Versioning
 
 - **Latest Release**: Always contains the most recent compiled PDFs
 - **Tagged Releases**: Create a git tag (e.g., `v1.0`) to create a permanent versioned release
@@ -79,7 +79,7 @@ git tag v1.0
 git push origin v1.0
 ```
 
-## 📋 LaTeX Packages Used
+## LaTeX Packages Used
 
 - `geometry` - Page layout and margins
 - `graphicx` - Image inclusion (for photo version)
@@ -90,7 +90,7 @@ git push origin v1.0
 - `fontawesome5` - Icons
 - `hyperref` - Links and metadata
 
-## 📧 Contact
+## Contact
 
 For any questions about this resume or potential opportunities, please reach out through the contact information provided in the resume PDFs.
 

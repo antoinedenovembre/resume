@@ -1,4 +1,4 @@
-name: Compile Resume
+name: Compile resume
 
 on:
   push:
@@ -73,7 +73,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: latest
-          name: "Latest Resume Build"
+          name: "Latest resume"
           body: |
             Latest compiled resume PDFs from commit ${{ github.sha }}
 
