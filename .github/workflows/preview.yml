@@ -1,0 +1,46 @@
+name: Generate Previews
+
+on:
+  workflow_run:
+    workflows: ["Compile Resume"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+jobs:
+  preview:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick ghostscript poppler-utils
+
+      - name: Download latest release PDFs
+        run: |
+          mkdir -p previews
+          curl -L -o previews/resume_en.pdf "https://github.com/${{ github.repository }}/releases/latest/download/resume_en.pdf"
+          curl -L -o previews/resume_fr.pdf "https://github.com/${{ github.repository }}/releases/latest/download/resume_fr.pdf"
+
+      - name: Generate PNG previews (first page)
+        run: |
+          convert -density 180 "previews/resume_en.pdf[0]" -quality 92 previews/preview_en.png
+          convert -density 180 "previews/resume_fr.pdf[0]" -quality 92 previews/preview_fr.png
+
+      - name: Move previews into repo
+        run: |
+          mkdir -p assets/previews
+          mv previews/preview_en.png assets/previews/
+          mv previews/preview_fr.png assets/previews/
+
+      - name: Commit previews (skip CI)
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(previews): update preview images [skip ci]"
+          file_pattern: "assets/previews/*.png"

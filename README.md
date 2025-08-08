@@ -1,17 +1,30 @@
 # Resume Repository
 
-[![Compile resume](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml/badge.svg)](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml)
-[![Latest resume](https://img.shields.io/github/v/release/antoinedenovembre/resume?include_prereleases&label=Latest%20PDFs)](https://github.com/antoinedenovembre/resume/releases/latest)
+[![Last build](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml/badge.svg)](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml)
+[![Latest Release](https://img.shields.io/github/v/release/antoinedenovembre/resume?label=latest)](../../releases/latest)
+[![Pages](https://img.shields.io/badge/pages-live-brightgreen)](https://antoinedenovembre.github.io/resume/)
 
-This repository contains my resume source LaTeX files built with a modular architecture, automatically compiled to PDF format using GitHub Actions.
+A clean, modular LaTeX resume with multilingual support (French & English), optimized for both human readability and ATS parsing. Automatically compiled with GitHub Actions and updated on every push.
+
+## About
+This repository contains my LaTeX resume (FR/EN), compiled automatically with GitHub Actions.
+- **Latest PDFs:** [FR](https://github.com/antoinedenovembre/resume/releases/latest/download/resume_fr.pdf) · [EN](https://github.com/antoinedenovembre/resume/releases/latest/download/resume_en.pdf)
+- **Live preview (GitHub Pages):** https://antoinedenovembre.github.io/resume/
+
+## Preview
+
+<div align="center">
+  <img src="assets/previews/preview_fr.png" alt="CV Français" width="45%"/>
+  <img src="assets/previews/preview_en.png" alt="Resume English" width="45%"/>
+</div>
 
 ## Resume Versions
 
 The resume is available in **four versions** across **two languages**:
 
 ### English Versions
-- **With Photo** (`resume_with_image.pdf`) - Professional resume including headshot
-- **Without Photo** (`resume_no_image.pdf`) - Clean resume without personal photo
+- **With Photo** (`resume_with_image_en.pdf`) - Professional resume including headshot
+- **Without Photo** (`resume_no_image_en.pdf`) - Clean resume without personal photo
 
 ### French Versions  
 - **With Photo** (`resume_with_image_fr.pdf`) - CV professionnel avec photo
@@ -72,6 +85,8 @@ Every push to the `main` branch automatically:
 
 ## Project Structure
 
+<details>
+<summary>📁 Project Structure</summary>
 ```
 resume/
 ├── .github/workflows/
@@ -100,6 +115,7 @@ resume/
 ├── .gitignore                 # Git ignore rules
 └── README.md                  # This file
 ```
+</details>
 
 ## Modular Architecture
 
@@ -114,7 +130,7 @@ The project uses a modular LaTeX architecture for better maintainability:
 ### Multi-language Support
 
 - **Shared Configuration**: All languages use the same packages, styles, and commands
-- **Language-specific Content**: Separate content files for each language (`resume_content.tex` and `resume_content_fr.tex`)
+- **Language-specific Content**: Separate content files for each language (`resume_content_en.tex` and `resume_content_fr.tex`)
 - **Language-specific Headers**: Header files adapted for each language while maintaining the same styling
 - **Consistent Build System**: Simple `make en` and `make fr` commands to build all versions for each language
 
@@ -181,6 +197,14 @@ The project uses intelligent conditional compilation:
 ## Contact
 
 For any questions about this resume or potential opportunities, please reach out through the contact information provided in the resume PDFs.
+
+## Changelog
+
+See the [CHANGELOG.md](CHANGELOG.md) for detailed changes and updates to this repository.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Antoine – CV</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;margin:24px;line-height:1.4}
+    .grid{display:grid;gap:24px}
+    .embed{border:1px solid #ddd;border-radius:8px;overflow:hidden}
+    .embed object{width:100%;height:900px}
+    @media (max-width:900px){.embed object{height:75vh}}
+    header{margin-bottom:16px}
+    nav a{margin-right:12px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CV – Antoine</h1>
+    <p>Versions générées automatiquement depuis GitHub Actions. Les liens pointent toujours vers la <strong>dernière release</strong>.</p>
+    <nav>
+      <a href="https://github.com/antoinedenovembre/resume">GitHub</a>
+      <a href="https://github.com/antoinedenovembre/resume/releases/latest">Dernière release</a>
+    </nav>
+  </header>
+
+  <section class="grid">
+    <div class="embed">
+      <h2>CV – Français</h2>
+      <object data="https://github.com/antoinedenovembre/resume/releases/latest/download/resume_fr.pdf" type="application/pdf">
+        <p>Le PDF ne s'affiche pas ? <a href="https://github.com/antoinedenovembre/resume/releases/latest/download/resume_fr.pdf">Télécharger le CV FR</a>.</p>
+      </object>
+    </div>
+
+    <div class="embed">
+      <h2>CV – English</h2>
+      <object data="https://github.com/antoinedenovembre/resume/releases/latest/download/resume_en.pdf" type="application/pdf">
+        <p>Can't see the PDF? <a href="https://github.com/antoinedenovembre/resume/releases/latest/download/resume_en.pdf">Download the EN resume</a>.</p>
+      </object>
+    </div>
+  </section>
+</body>
+</html>
