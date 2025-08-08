@@ -1,43 +1,219 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Antoine – CV</title>
+  <title>Antoine – Resume</title>
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;margin:24px;line-height:1.4}
-    .grid{display:grid;gap:24px}
-    .embed{border:1px solid #ddd;border-radius:8px;overflow:hidden}
-    .embed object{width:100%;height:900px}
-    @media (max-width:900px){.embed object{height:75vh}}
-    header{margin-bottom:16px}
-    nav a{margin-right:12px}
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Helvetica, Arial, sans-serif;
+      margin: 24px;
+      line-height: 1.4;
+      background: #f8f9fa
+    }
+
+    .grid {
+      display: grid;
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
+    }
+
+    .download-btn {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.2s
+    }
+
+    .download-btn:hover {
+      background: #1d4ed8
+    }
+
+    .download-btn.secondary {
+      background: #6b7280;
+      margin-left: 12px
+    }
+
+    .download-btn.secondary:hover {
+      background: #4b5563
+    }
+
+    .preview {
+      margin-top: 16px;
+      text-align: center
+    }
+
+    .preview img {
+      max-width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)
+    }
+
+    header {
+      margin-bottom: 32px;
+      text-align: center
+    }
+
+    nav {
+      margin-top: 16px
+    }
+
+    nav a {
+      margin: 0 8px;
+      color: #2563eb;
+      text-decoration: none
+    }
+
+    nav a:hover {
+      text-decoration: underline
+    }
+
+    .versions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 16px
+    }
+
+    .version-card {
+      background: #f8f9fa;
+      padding: 16px;
+      border-radius: 8px;
+      border-left: 4px solid #2563eb
+    }
+
+    .version-card h4 {
+      margin: 0 0 8px 0;
+      color: #1f2937
+    }
+
+    .version-card p {
+      margin: 0 0 12px 0;
+      color: #6b7280;
+      font-size: 14px
+    }
+
+    .version-card a {
+      font-size: 14px
+    }
+
+    @media (max-width:768px) {
+      .download-btn {
+        display: block;
+        margin: 8px 0;
+        text-align: center
+      }
+    }
   </style>
 </head>
+
 <body>
   <header>
-    <h1>CV – Antoine</h1>
-    <p>Versions générées automatiquement depuis GitHub Actions. Les liens pointent toujours vers la <strong>dernière release</strong>.</p>
+    <h1>Resume – Antoine de Novembre</h1>
+    <p>Versions automatically generated from GitHub Actions. Links always point to the <strong>latest release</strong>.
+    </p>
     <nav>
       <a href="https://github.com/antoinedenovembre/resume">GitHub</a>
-      <a href="https://github.com/antoinedenovembre/resume/releases/latest">Dernière release</a>
+      <a href="https://github.com/antoinedenovembre/resume/releases/latest">Latest release</a>
+      <a href="https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml">Build Status</a>
     </nav>
   </header>
 
   <section class="grid">
-    <div class="embed">
-      <h2>CV – Français</h2>
-      <object data="https://github.com/antoinedenovembre/resume/releases/latest/download/resume_fr.pdf" type="application/pdf">
-        <p>Le PDF ne s'affiche pas ? <a href="https://github.com/antoinedenovembre/resume/releases/latest/download/resume_fr.pdf">Télécharger le CV FR</a>.</p>
-      </object>
+    <div class="card">
+      <h2>French Resume</h2>
+      <p>Curriculum vitae in French, automatically generated on every modification.</p>
+
+      <div>
+        <a href="https://github.com/antoinedenovembre/resume/releases/latest/download/resume_fr.pdf"
+          class="download-btn" target="_blank">
+          Download PDF (with photo)
+        </a>
+        <a href="https://github.com/antoinedenovembre/resume/releases/latest/download/resume-no-image-fr.pdf"
+          class="download-btn secondary" target="_blank">
+          Without photo
+        </a>
+      </div>
+
+      <div class="versions">
+        <div class="version-card">
+          <h4>Version with photo</h4>
+          <p>Complete version with professional photo</p>
+          <a href="https://github.com/antoinedenovembre/resume/releases/latest/download/resume-with-image-fr.pdf"
+            target="_blank">Download →</a>
+        </div>
+        <div class="version-card">
+          <h4>Version without photo</h4>
+          <p>Clean version without personal photo</p>
+          <a href="https://github.com/antoinedenovembre/resume/releases/latest/download/resume-no-image-fr.pdf"
+            target="_blank">Download →</a>
+        </div>
+      </div>
+
+      <div class="preview">
+        <p><small>Auto-generated preview:</small></p>
+        <img src="https://raw.githubusercontent.com/antoinedenovembre/resume/main/assets/previews/preview_fr.png"
+          alt="French Resume Preview" loading="lazy" />
+      </div>
     </div>
 
-    <div class="embed">
-      <h2>CV – English</h2>
-      <object data="https://github.com/antoinedenovembre/resume/releases/latest/download/resume_en.pdf" type="application/pdf">
-        <p>Can't see the PDF? <a href="https://github.com/antoinedenovembre/resume/releases/latest/download/resume_en.pdf">Download the EN resume</a>.</p>
-      </object>
+    <div class="card">
+      <h2>English Resume</h2>
+      <p>Professional resume in English, automatically generated on every update.</p>
+
+      <div>
+        <a href="https://github.com/antoinedenovembre/resume/releases/latest/download/resume_en.pdf"
+          class="download-btn" target="_blank">
+          Download PDF (with photo)
+        </a>
+        <a href="https://github.com/antoinedenovembre/resume/releases/latest/download/resume-no-image-en.pdf"
+          class="download-btn secondary" target="_blank">
+          Without photo
+        </a>
+      </div>
+
+      <div class="versions">
+        <div class="version-card">
+          <h4>Version with photo</h4>
+          <p>Complete version with professional headshot</p>
+          <a href="https://github.com/antoinedenovembre/resume/releases/latest/download/resume-with-image-en.pdf"
+            target="_blank">Download →</a>
+        </div>
+        <div class="version-card">
+          <h4>Version without photo</h4>
+          <p>Clean version without personal photo</p>
+          <a href="https://github.com/antoinedenovembre/resume/releases/latest/download/resume-no-image-en.pdf"
+            target="_blank">Download →</a>
+        </div>
+      </div>
+
+      <div class="preview">
+        <p><small>Auto-generated preview:</small></p>
+        <img src="https://raw.githubusercontent.com/antoinedenovembre/resume/main/assets/previews/preview_en.png"
+          alt="English Resume Preview" loading="lazy" />
+      </div>
     </div>
   </section>
+
+  <footer style="text-align:center;margin-top:48px;padding-top:24px;border-top:1px solid #ddd;color:#6b7280">
+    <p><small>Automatically compiled with GitHub Actions • Latest automatic update</small></p>
+    <p><small>Contact: See information in the resume</small></p>
+  </footer>
 </body>
+
 </html>

@@ -32,12 +32,35 @@ jobs:
 
       - name: Generate PNG previews (first page)
         run: |
-          # Use pdftoppm as alternative to ImageMagick for better reliability
+          # Use pdftoppm with better error handling
           pdftoppm -png -f 1 -l 1 -r 180 previews/resume_en.pdf previews/preview_en
           pdftoppm -png -f 1 -l 1 -r 180 previews/resume_fr.pdf previews/preview_fr
-          # Rename to expected format
-          mv previews/preview_en-01.png previews/preview_en.png
-          mv previews/preview_fr-01.png previews/preview_fr.png
+
+          # Debug: list generated files
+          ls -la previews/
+
+          # Handle different possible output formats from pdftoppm
+          if [ -f "previews/preview_en-1.png" ]; then
+            mv previews/preview_en-1.png previews/preview_en.png
+          elif [ -f "previews/preview_en-01.png" ]; then
+            mv previews/preview_en-01.png previews/preview_en.png
+          elif [ -f "previews/preview_en.png" ]; then
+            echo "preview_en.png already exists"
+          else
+            echo "Error: No preview_en output file found"
+            exit 1
+          fi
+
+          if [ -f "previews/preview_fr-1.png" ]; then
+            mv previews/preview_fr-1.png previews/preview_fr.png
+          elif [ -f "previews/preview_fr-01.png" ]; then
+            mv previews/preview_fr-01.png previews/preview_fr.png
+          elif [ -f "previews/preview_fr.png" ]; then
+            echo "preview_fr.png already exists"
+          else
+            echo "Error: No preview_fr output file found"
+            exit 1
+          fi
 
       - name: Move previews into repo
         run: |
