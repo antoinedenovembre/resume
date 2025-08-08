@@ -21,6 +21,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y imagemagick ghostscript poppler-utils
+          # Configure ImageMagick to allow PDF processing
+          sudo sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' /etc/ImageMagick-6/policy.xml
 
       - name: Download latest release PDFs
         run: |
@@ -30,8 +32,12 @@ jobs:
 
       - name: Generate PNG previews (first page)
         run: |
-          convert -density 180 "previews/resume_en.pdf[0]" -quality 92 previews/preview_en.png
-          convert -density 180 "previews/resume_fr.pdf[0]" -quality 92 previews/preview_fr.png
+          # Use pdftoppm as alternative to ImageMagick for better reliability
+          pdftoppm -png -f 1 -l 1 -r 180 previews/resume_en.pdf previews/preview_en
+          pdftoppm -png -f 1 -l 1 -r 180 previews/resume_fr.pdf previews/preview_fr
+          # Rename to expected format
+          mv previews/preview_en-01.png previews/preview_en.png
+          mv previews/preview_fr-01.png previews/preview_fr.png
 
       - name: Move previews into repo
         run: |

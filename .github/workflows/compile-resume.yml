@@ -68,11 +68,15 @@ jobs:
       - name: Prepare files for release
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          # Copy and rename PDFs to avoid name conflicts
+          # Copy and rename PDFs for consistent naming
+          # Use "with image" versions as the default resume files
           cp build/resume_with_image_en.pdf resume-with-image-en.pdf
           cp build/resume_no_image_en.pdf resume-no-image-en.pdf
           cp build/resume_with_image_fr.pdf resume-with-image-fr.pdf
           cp build/resume_no_image_fr.pdf resume-no-image-fr.pdf
+          # Create simplified names for easy access (using with-image versions as default)
+          cp build/resume_with_image_en.pdf resume_en.pdf
+          cp build/resume_with_image_fr.pdf resume_fr.pdf
           ls -la *.pdf
 
       - name: Create Latest Release
@@ -89,9 +93,11 @@ jobs:
             - `resume-no-image-en.pdf` - Resume without headshot (English)
             - `resume-with-image-fr.pdf` - Resume with headshot (French)
             - `resume-no-image-fr.pdf` - Resume without headshot (French)
+            - `resume_en.pdf` - Default English resume (with photo)
+            - `resume_fr.pdf` - Default French resume (with photo)
 
             **Build date:** ${{ github.event.head_commit.timestamp }}
-          files: resume-with-image-en.pdf,resume-no-image-en.pdf,resume-with-image-fr.pdf,resume-no-image-fr.pdf
+          files: resume-with-image-en.pdf,resume-no-image-en.pdf,resume-with-image-fr.pdf,resume-no-image-fr.pdf,resume_en.pdf,resume_fr.pdf
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -104,11 +110,14 @@ jobs:
           cp build/resume_no_image_en.pdf resume-no-image-en.pdf
           cp build/resume_with_image_fr.pdf resume-with-image-fr.pdf
           cp build/resume_no_image_fr.pdf resume-no-image-fr.pdf
+          # Create simplified names for easy access (using with-image versions as default)
+          cp build/resume_with_image_en.pdf resume_en.pdf
+          cp build/resume_with_image_fr.pdf resume_fr.pdf
 
       - name: Upload Tagged Release
         if: startsWith(github.ref, 'refs/tags/') && github.ref != 'refs/tags/latest'
         uses: softprops/action-gh-release@v2
         with:
-          files: resume-with-image-en.pdf,resume-no-image-en.pdf,resume-with-image-fr.pdf,resume-no-image-fr.pdf
+          files: resume-with-image-en.pdf,resume-no-image-en.pdf,resume-with-image-fr.pdf,resume-no-image-fr.pdf,resume_en.pdf,resume_fr.pdf
           draft: false
           token: ${{ secrets.GITHUB_TOKEN }}

@@ -9,6 +9,7 @@ A clean, modular LaTeX resume with multilingual support (French & English), opti
 ## About
 This repository contains my LaTeX resume (FR/EN), compiled automatically with GitHub Actions.
 - **Latest PDFs:** [FR](https://github.com/antoinedenovembre/resume/releases/latest/download/resume_fr.pdf) · [EN](https://github.com/antoinedenovembre/resume/releases/latest/download/resume_en.pdf)
+- **All versions:** [With/Without Photo - FR/EN](https://github.com/antoinedenovembre/resume/releases/latest) 
 - **Live preview (GitHub Pages):** https://antoinedenovembre.github.io/resume/
 
 ## Preview
@@ -20,15 +21,17 @@ This repository contains my LaTeX resume (FR/EN), compiled automatically with Gi
 
 ## Resume Versions
 
-The resume is available in **four versions** across **two languages**:
+The resume is available in **six versions** across **two languages**:
 
 ### English Versions
-- **With Photo** (`resume_with_image_en.pdf`) - Professional resume including headshot
-- **Without Photo** (`resume_no_image_en.pdf`) - Clean resume without personal photo
+- **Default** (`resume_en.pdf`) - Professional resume with headshot (recommended)
+- **With Photo** (`resume-with-image-en.pdf`) - Professional resume including headshot
+- **Without Photo** (`resume-no-image-en.pdf`) - Clean resume without personal photo
 
 ### French Versions  
-- **With Photo** (`resume_with_image_fr.pdf`) - CV professionnel avec photo
-- **Without Photo** (`resume_no_image_fr.pdf`) - CV épuré sans photo
+- **Default** (`resume_fr.pdf`) - CV professionnel avec photo (recommandé)
+- **With Photo** (`resume-with-image-fr.pdf`) - CV professionnel avec photo
+- **Without Photo** (`resume-no-image-fr.pdf`) - CV épuré sans photo
 
 ## Quick Access
 
