@@ -64,10 +64,13 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)
     }
 
-    horizontal-center {
+    .horizontal-center {
       display: flex;
       justify-content: center;
-      align-items: center
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 16px 0;
     }
 
     header {
@@ -92,8 +95,20 @@
     @media (max-width:768px) {
       .download-btn {
         display: block;
-        margin: 8px 0;
-        text-align: center
+        width: calc(100% - 32px);
+        margin: 8px 16px;
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      .horizontal-center {
+        flex-direction: column;
+        gap: 0;
+        margin: 16px 0;
+      }
+
+      .download-btn.secondary {
+        margin: 8px 16px;
       }
     }
   </style>
@@ -101,7 +116,7 @@
 
 <body>
   <header>
-    <h1>Resume/CV – Antoine Duteyrat</h1>
+    <h1>Resume – Antoine Duteyrat</h1>
     <p>Versions automatically generated from GitHub Actions. Links always point to the <strong>latest release</strong>.
     </p>
     <nav>
@@ -113,7 +128,7 @@
 
   <section class="grid">
     <div class="card">
-      <h2>French Resume</h2>
+      <h2>French CV</h2>
       <p>Curriculum vitae in French, automatically generated on every modification.</p>
 
       <div class="horizontal-center">
