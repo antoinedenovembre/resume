@@ -4,3 +4,6 @@
 # LaTeX
 *.gz
 *.pdf
+
+# logs
+build/logs
