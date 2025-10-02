@@ -37,6 +37,17 @@ RESET        = \033[0m
 LATEXMK     = latexmk
 LATEX_FLAGS = -pdf -interaction=nonstopmode -silent
 
+# ===== Source dependencies =====
+COMMON_SOURCES = src/config/packages.tex \
+                 src/config/style.tex \
+                 src/config/commands.tex
+
+FR_SOURCES = $(COMMON_SOURCES) src/content/resume_content_fr.tex
+EN_SOURCES = $(COMMON_SOURCES) src/content/resume_content_en.tex
+
+WITH_IMAGE_SOURCES = src/layout/header_with_image.tex
+NO_IMAGE_SOURCES = src/layout/header_no_image.tex
+
 # ===== Default targets =====
 all: en fr
 
@@ -56,10 +67,31 @@ no_image_fr:    $(BUILD_DIR)/resume_no_image_fr.pdf
 # ===== Pattern rule: build build/foo.pdf from build/foo.tex =====
 # We cd into build/ (your sources live there) and silence latexmk output,
 # redirecting full logs to build/logs/foo.log. Aux files are cleaned right after.
-$(BUILD_DIR)/%.pdf: $(BUILD_DIR)/%.tex | $(BUILD_DIR) $(LOG_DIR)
-	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)$*.tex → $*.pdf$(RESET)"
-	@cd $(BUILD_DIR) && $(LATEXMK) $(LATEX_FLAGS) $*.tex > "$(LOG_DIR)/$*.log" 2>&1
-	@cd $(BUILD_DIR) && $(LATEXMK) -c $*.tex > /dev/null 2>&1
+
+# French resumes depend on French content
+$(BUILD_DIR)/resume_with_image_fr.pdf: $(BUILD_DIR)/resume_with_image_fr.tex $(FR_SOURCES) $(WITH_IMAGE_SOURCES) | $(BUILD_DIR) $(LOG_DIR)
+	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)resume_with_image_fr.tex → resume_with_image_fr.pdf$(RESET)"
+	@cd $(BUILD_DIR) && $(LATEXMK) $(LATEX_FLAGS) resume_with_image_fr.tex > "$(LOG_DIR)/resume_with_image_fr.log" 2>&1
+	@cd $(BUILD_DIR) && $(LATEXMK) -c resume_with_image_fr.tex > /dev/null 2>&1
+	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Built → $@ [√]$(RESET)\n"
+
+$(BUILD_DIR)/resume_no_image_fr.pdf: $(BUILD_DIR)/resume_no_image_fr.tex $(FR_SOURCES) $(NO_IMAGE_SOURCES) | $(BUILD_DIR) $(LOG_DIR)
+	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)resume_no_image_fr.tex → resume_no_image_fr.pdf$(RESET)"
+	@cd $(BUILD_DIR) && $(LATEXMK) $(LATEX_FLAGS) resume_no_image_fr.tex > "$(LOG_DIR)/resume_no_image_fr.log" 2>&1
+	@cd $(BUILD_DIR) && $(LATEXMK) -c resume_no_image_fr.tex > /dev/null 2>&1
+	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Built → $@ [√]$(RESET)\n"
+
+# English resumes depend on English content
+$(BUILD_DIR)/resume_with_image_en.pdf: $(BUILD_DIR)/resume_with_image_en.tex $(EN_SOURCES) $(WITH_IMAGE_SOURCES) | $(BUILD_DIR) $(LOG_DIR)
+	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)resume_with_image_en.tex → resume_with_image_en.pdf$(RESET)"
+	@cd $(BUILD_DIR) && $(LATEXMK) $(LATEX_FLAGS) resume_with_image_en.tex > "$(LOG_DIR)/resume_with_image_en.log" 2>&1
+	@cd $(BUILD_DIR) && $(LATEXMK) -c resume_with_image_en.tex > /dev/null 2>&1
+	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Built → $@ [√]$(RESET)\n"
+
+$(BUILD_DIR)/resume_no_image_en.pdf: $(BUILD_DIR)/resume_no_image_en.tex $(EN_SOURCES) $(NO_IMAGE_SOURCES) | $(BUILD_DIR) $(LOG_DIR)
+	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)resume_no_image_en.tex → resume_no_image_en.pdf$(RESET)"
+	@cd $(BUILD_DIR) && $(LATEXMK) $(LATEX_FLAGS) resume_no_image_en.tex > "$(LOG_DIR)/resume_no_image_en.log" 2>&1
+	@cd $(BUILD_DIR) && $(LATEXMK) -c resume_no_image_en.tex > /dev/null 2>&1
 	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Built → $@ [√]$(RESET)\n"
 
 # Ensure dirs exist
