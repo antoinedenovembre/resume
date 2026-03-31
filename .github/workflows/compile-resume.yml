@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -16,6 +17,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Generate LaTeX content from YAML
+        run: |
+          pip install pyyaml
+          python scripts/generate_tex.py data/resume_en.yml src/content/resume_content_en.tex en
+          python scripts/generate_tex.py data/resume_fr.yml src/content/resume_content_fr.tex fr
 
       - name: Compile resume with image (English)
         uses: xu-cheng/latex-action@v3
@@ -57,7 +69,7 @@ jobs:
           retention-days: 30
 
       - name: Delete existing latest release
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         continue-on-error: true
         run: |
           gh release delete latest --yes || true
@@ -66,7 +78,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Prepare files for release
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         run: |
           # Copy and rename PDFs for consistent naming
           # Use "with image" versions as the default resume files
@@ -80,7 +92,7 @@ jobs:
           ls -la *.pdf
 
       - name: Create Latest Release
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest

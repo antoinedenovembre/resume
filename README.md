@@ -16,6 +16,20 @@ A clean, modular LaTeX resume with multilingual support (French & English), opti
 - **Live preview:** [GitHub Pages](https://antoinedenovembre.github.io/resume/)
 - **All versions:** [Latest Release](https://github.com/antoinedenovembre/resume/releases/latest)
 
+## Editing on Mobile (or anywhere)
+
+Resume content is stored as simple YAML files — no LaTeX knowledge required for everyday edits.
+
+### Edit content
+Open one of these files on GitHub (web or mobile app) and edit directly:
+- [`data/resume_en.yml`](data/resume_en.yml) — English resume
+- [`data/resume_fr.yml`](data/resume_fr.yml) — French resume
+
+Use `**bold text**` for bold and `_italic text_` for italic. Commit your change and GitHub Actions will compile and publish the updated PDFs automatically.
+
+### Manual rebuild (without editing)
+Go to **[Actions → Compile resume](../../actions/workflows/compile-resume.yml)** and click **Run workflow** to trigger a fresh build without changing any file. This works from the GitHub mobile app too.
+
 ## Preview
 
 <div align="center">
