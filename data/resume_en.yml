@@ -1,0 +1,47 @@
+experience:
+  - company: "Safety Tech"
+    location: "Brignais, France"
+    period: "Sept 2022 - Aug 2025"
+    title: "Image processing and engineering apprentice"
+    highlights:
+      - "Integrated cross-compiled software into a **Buildroot** Linux image and an **RTOS** for a hybrid embedded target using **Docker** and **CMake**."
+      - "Software development in **C/C++** using design patterns and **Bash** scripts for task automation, as well as maintenance of embedded devices (serial/SSH access, **flashing**)."
+      - "Designed and maintained **GitLab CI/CD** pipelines to automate building, testing, and deployment."
+      - "Worked with **CAN**, **Ethernet**, and **MQTT**."
+      - "Participated in and facilitated an agile **SCRUM** methodology in an industrial context driven by the **V-Model**."
+
+  - company: "NTNU Gjøvik"
+    location: "Gjøvik, Norway"
+    period: "Aug 2024 - Oct 2024"
+    title: "Image processing for detection and tracking intern"
+    highlights:
+      - "Trained and evaluated **EfficientDet** and **YOLOv8** for animal detection in pens via **Ultralytics** and **TensorFlow**"
+      - "Implemented a **Barlow Twins** optimization algorithm for self-supervised learning on the EfficientDet model"
+
+education:
+  - institution: "Télécom Saint-Étienne"
+    location: "Saint-Étienne, France"
+    period: "Sept 2022 - Now"
+    degree: "Master's degree in Image Processing and Photonics"
+    highlights:
+      - "**Relevant coursework:** Deep Learning (in Python), Image Processing, 3D Imagery"
+      - "**Relevant information:** Apprenticeship with Safety Tech in Brignais, France"
+
+  - institution: "Université du Québec à Chicoutimi"
+    location: "Chicoutimi, Canada"
+    period: "Jan 2022 - May 2022"
+    degree: "Exchange semester in Computer Science"
+    highlights:
+      - "**Relevant coursework:** Calculus II, Data Mining (in Python)"
+
+  - institution: "Université Clermont Auvergne"
+    location: "Clermont-Ferrand, France"
+    period: "Sept 2020 - July 2022"
+    degree: "Associate's degree in Computer Science"
+    highlights:
+      - "**Relevant coursework:** OOP, C++ programming, Advanced algorithms"
+
+skills:
+  languages: "French (native), English (C1, TOEIC 990/990)"
+  technical: "C, C++, Computer Networking, Machine and Deep Learning in Python (Ultralytics, TensorFlow), Web programming, Image processing, SCRUM project management"
+  interests: "Technology Trends, Video Games, Travelling, Cinema"
