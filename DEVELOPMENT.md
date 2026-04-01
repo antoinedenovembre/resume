@@ -12,7 +12,7 @@ This document contains detailed information for developers who want to work on o
 ### Building Locally
 
 ```bash
-# Generate LaTeX content files from the YAML data (required before first build)
+# Generate LaTeX content files from the YAML data (optional; use if you want to generate content without building PDFs)
 make generate
 
 # Build all versions in both languages (recommended)

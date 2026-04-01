@@ -122,11 +122,44 @@ def main() -> None:
     with yaml_path.open(encoding='utf-8') as f:
         raw = yaml.safe_load(f)
 
+    # Validate YAML structure
+    if raw is None:
+        print(f'Error: YAML file "{yaml_path}" is empty.', file=sys.stderr)
+        sys.exit(1)
+
+    if not isinstance(raw, dict):
+        print(
+            f'Error: Top-level YAML in "{yaml_path}" must be a mapping, '
+            f'got {type(raw).__name__}.',
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
     # Support merged file (top-level language keys) or single-language file
     if lang in raw:
         data = raw[lang]
+        if not isinstance(data, dict):
+            print(
+                f'Error: Entry for language "{lang}" in "{yaml_path}" must be a mapping, '
+                f'got {type(data).__name__}.',
+                file=sys.stderr,
+            )
+            sys.exit(1)
     else:
-        data = raw
+        # Heuristic: treat as single-language file only if it already looks like resume data
+        looks_like_single_lang = any(
+            key in raw for key in ('experience', 'education', 'skills')
+        )
+        if looks_like_single_lang:
+            data = raw
+        else:
+            available_keys = ', '.join(sorted(raw.keys()))
+            print(
+                f'Error: Language "{lang}" not found in "{yaml_path}". '
+                f'Available top-level keys: {available_keys or "(none)"}',
+                file=sys.stderr,
+            )
+            sys.exit(1)
 
     tex_content = generate_tex(data, lang)
 
