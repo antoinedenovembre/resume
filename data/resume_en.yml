@@ -1,4 +1,13 @@
 experience:
+  - company: "Abylsen"
+    location: "Saint-Héand, France"
+    period: "Dec 2025 - Now"
+    title: "Embedded Software Integration Engineer"
+    highlights:
+      - "Understood the software architecture of a system involving differents **MCUs**, a **SOM** and **FPGA**"
+      - "Integrated CI/CD, creating multiple Docker images for stable development environments"
+      - "Embedded software development, integrating Yocto and a Yocto-SDK both with CLI and Qt"
+
   - company: "Safety Tech"
     location: "Brignais, France"
     period: "Sept 2022 - Aug 2025"
