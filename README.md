@@ -18,14 +18,15 @@ A clean, modular LaTeX resume with multilingual support (French & English), opti
 
 ## Editing on Mobile (or anywhere)
 
-Resume content is stored as simple YAML files — no LaTeX knowledge required for everyday edits.
+Resume content is stored as a single YAML file — no LaTeX knowledge required for everyday edits.
 
 ### Edit content
-Open one of these files on GitHub (web or mobile app) and edit directly:
-- [`data/resume_en.yml`](data/resume_en.yml) — English resume
-- [`data/resume_fr.yml`](data/resume_fr.yml) — French resume
+Open this file on GitHub (web or mobile app) and edit directly:
+- [`data/resume.yml`](data/resume.yml) — All resume content (both English and French)
 
-Use `**bold text**` for bold and `_italic text_` for italic. Commit your change and GitHub Actions will compile and publish the updated PDFs automatically.
+The file has `en:` and `fr:` top-level sections. Just update both sections with your changes, commit, and GitHub Actions will compile and publish the updated PDFs automatically.
+
+Use `**bold text**` for bold and `_italic text_` for italic.
 
 ### Manual rebuild (without editing)
 Go to **[Actions → Compile resume](../../actions/workflows/compile-resume.yml)** and click **Run workflow** to trigger a fresh build without changing any file. This works from the GitHub mobile app too.

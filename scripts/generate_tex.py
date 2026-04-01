@@ -4,6 +4,9 @@ Convert YAML resume data to LaTeX content files.
 
 Usage: python generate_tex.py <input.yml> <output.tex> [lang]
 
+The input YAML may be a merged file with top-level language keys (e.g. 'en', 'fr'),
+or a single-language file with top-level section keys ('experience', 'education', 'skills').
+
 Supported inline formatting in YAML values:
   **bold text**  -> \\textbf{bold text}
   _italic text_  -> \\textit{italic text}
@@ -117,7 +120,13 @@ def main() -> None:
     lang = sys.argv[3] if len(sys.argv) > 3 else 'en'
 
     with yaml_path.open(encoding='utf-8') as f:
-        data = yaml.safe_load(f)
+        raw = yaml.safe_load(f)
+
+    # Support merged file (top-level language keys) or single-language file
+    if lang in raw:
+        data = raw[lang]
+    else:
+        data = raw
 
     tex_content = generate_tex(data, lang)
 

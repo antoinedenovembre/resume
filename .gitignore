@@ -7,3 +7,5 @@
 
 # logs
 build/logs
+# Generated LaTeX content (produced by scripts/generate_tex.py)
+src/content/

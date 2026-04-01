@@ -1,5 +1,5 @@
 # ===== Pretty, quiet LaTeX CV Makefile =====
-.PHONY: all en fr with_image_en no_image_en with_image_fr no_image_fr clean clean-all re test logs tail-%
+.PHONY: all en fr with_image_en no_image_en with_image_fr no_image_fr generate clean clean-all re test logs tail-%
 
 # ===== Project =====
 NAME        = resume
@@ -36,14 +36,20 @@ RESET        = \033[0m
 # ===== Toolchain =====
 LATEXMK     = latexmk
 LATEX_FLAGS = -pdf -interaction=nonstopmode -silent
+PYTHON      = python3
+
+# ===== Data & generated content =====
+DATA_FILE   = data/resume.yml
+CONTENT_EN  = src/content/resume_content_en.tex
+CONTENT_FR  = src/content/resume_content_fr.tex
 
 # ===== Source dependencies =====
 COMMON_SOURCES = src/config/packages.tex \
                  src/config/style.tex \
                  src/config/commands.tex
 
-FR_SOURCES = $(COMMON_SOURCES) src/content/resume_content_fr.tex
-EN_SOURCES = $(COMMON_SOURCES) src/content/resume_content_en.tex
+FR_SOURCES = $(COMMON_SOURCES) $(CONTENT_FR)
+EN_SOURCES = $(COMMON_SOURCES) $(CONTENT_EN)
 
 WITH_IMAGE_SOURCES = src/layout/header_with_image.tex
 NO_IMAGE_SOURCES = src/layout/header_no_image.tex
@@ -63,6 +69,20 @@ with_image_en:  $(BUILD_DIR)/resume_with_image_en.pdf
 no_image_en:    $(BUILD_DIR)/resume_no_image_en.pdf
 with_image_fr:  $(BUILD_DIR)/resume_with_image_fr.pdf
 no_image_fr:    $(BUILD_DIR)/resume_no_image_fr.pdf
+
+# ===== Content generation: YAML → LaTeX =====
+generate: $(CONTENT_EN) $(CONTENT_FR)
+	@printf "$(BLUE)$(NAME): $(GREEN)LaTeX content generated [√]$(RESET)\n"
+
+$(CONTENT_EN): $(DATA_FILE) scripts/generate_tex.py
+	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)$(DATA_FILE) → $(CONTENT_EN)$(RESET)"
+	@$(PYTHON) scripts/generate_tex.py $(DATA_FILE) $(CONTENT_EN) en
+	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Generated → $(CONTENT_EN) [√]$(RESET)\n"
+
+$(CONTENT_FR): $(DATA_FILE) scripts/generate_tex.py
+	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)$(DATA_FILE) → $(CONTENT_FR)$(RESET)"
+	@$(PYTHON) scripts/generate_tex.py $(DATA_FILE) $(CONTENT_FR) fr
+	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Generated → $(CONTENT_FR) [√]$(RESET)\n"
 
 # ===== Pattern rule: build build/foo.pdf from build/foo.tex =====
 # We cd into build/ (your sources live there) and silence latexmk output,
@@ -112,8 +132,9 @@ clean:
 	@printf "$(BLUE)$(NAME): $(GREEN)Done.$(RESET)\n"
 
 clean-all: clean
-	@printf "$(BLUE)$(NAME): $(YELLOW)Removing PDFs$(RESET)\n"
+	@printf "$(BLUE)$(NAME): $(YELLOW)Removing PDFs and generated content$(RESET)\n"
 	@rm -f $(BUILD_DIR)/*.pdf
+	@rm -f $(CONTENT_EN) $(CONTENT_FR)
 	@printf "$(BLUE)$(NAME): $(GREEN)Done.$(RESET)\n"
 
 re: clean-all all

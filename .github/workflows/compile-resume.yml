@@ -26,8 +26,8 @@ jobs:
       - name: Generate LaTeX content from YAML
         run: |
           pip install pyyaml
-          python scripts/generate_tex.py data/resume_en.yml src/content/resume_content_en.tex en
-          python scripts/generate_tex.py data/resume_fr.yml src/content/resume_content_fr.tex fr
+          python scripts/generate_tex.py data/resume.yml src/content/resume_content_en.tex en
+          python scripts/generate_tex.py data/resume.yml src/content/resume_content_fr.tex fr
 
       - name: Compile resume with image (English)
         uses: xu-cheng/latex-action@v3
