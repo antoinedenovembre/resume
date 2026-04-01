@@ -6,8 +6,8 @@ en:
       title: "Embedded Software Integration Engineer"
       highlights:
         - "Understood the software architecture of a system involving different **MCUs**, a **SOM** and **FPGA**"
-        - "Integrated CI/CD, creating multiple Docker images for stable development environments"
-        - "Embedded software development, integrating Yocto and a Yocto-SDK both with CLI and Qt"
+        - "Integrated multiple **CI/CD pipelines** (Build, SonarQube, Unit testing), creating multiple Docker images for stable development environments"
+        - "Embedded software development, using **Yocto Linux image** and a **Yocto-SDK** both with **CLI** and **Qt**"
 
     - company: "Safety Tech"
       location: "Brignais, France"
@@ -17,7 +17,6 @@ en:
         - "Integrated cross-compiled software into a **Buildroot** Linux image and an **RTOS** for a hybrid embedded target using **Docker** and **CMake**."
         - "Software development in **C/C++** using design patterns and **Bash** scripts for task automation, as well as maintenance of embedded devices (serial/SSH access, **flashing**)."
         - "Designed and maintained **GitLab CI/CD** pipelines to automate building, testing, and deployment."
-        - "Worked with **CAN**, **Ethernet**, and **MQTT**."
         - "Participated in and facilitated an agile **SCRUM** methodology in an industrial context driven by the **V-Model**."
 
     - company: "NTNU Gjøvik"
@@ -31,7 +30,7 @@ en:
   education:
     - institution: "Télécom Saint-Étienne"
       location: "Saint-Étienne, France"
-      period: "Sept 2022 - Now"
+      period: "Sept 2022 - Aug 2025"
       degree: "Master's degree in Image Processing and Photonics"
       highlights:
         - "**Relevant coursework:** Deep Learning (in Python), Image Processing, 3D Imagery"
@@ -63,9 +62,9 @@ fr:
       period: "Déc 2025 - Aujourd'hui"
       title: "Ingénieur Intégration Logicielle Embarquée"
       highlights:
-        - "Compréhension de l'architecture logicielle d'un système impliquant différents **MCUs**, un **SOM** et un **FPGA**"
-        - "Intégration CI/CD, création de plusieurs images Docker pour des environnements de développement stables"
-        - "Développement logiciel embarqué, intégration de Yocto et d'un Yocto-SDK en CLI et avec Qt"
+        - "Compréhension de l'architecture logicielle d'un système impliquant différents **MCUs**, une carte **SOM** et un **FPGA**"
+        - "Intégration de plusieurs **pipelines CI/CD**, création de plusieurs images **Docker** pour des environnements de développement stables"
+        - "Développement logiciel embarqué, utilisant une **image Linux Yocto** et un **SDK Yocto ARM** via **CLI** et avec **Qt**"
 
     - company: "Safety Tech"
       location: "Brignais, France"
@@ -89,7 +88,7 @@ fr:
   education:
     - institution: "Télécom Saint-Étienne"
       location: "Saint-Étienne, France"
-      period: "Sept 2022 - Aujourd'hui"
+      period: "Sept 2022 - Août 2025"
       degree: "Diplôme d'Ingénieur en Image, Photonique et Smart-Industries"
       highlights:
         - "**Cours principaux :** Deep Learning (en Python), Traitement d'Image, Imagerie 3D"
