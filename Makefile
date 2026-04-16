@@ -39,14 +39,16 @@ LATEX_FLAGS = -pdf -interaction=nonstopmode -silent
 PYTHON      = python3
 
 # ===== Data & generated content =====
-DATA_FILE   = data/resume.yml
-CONTENT_EN  = src/content/resume_content_en.tex
-CONTENT_FR  = src/content/resume_content_fr.tex
+DATA_FILE    = data/resume.yml
+PERSONAL_TEX = src/content/personal.tex
+CONTENT_EN   = src/content/resume_content_en.tex
+CONTENT_FR   = src/content/resume_content_fr.tex
 
 # ===== Source dependencies =====
 COMMON_SOURCES = src/config/packages.tex \
                  src/config/style.tex \
-                 src/config/commands.tex
+                 src/config/commands.tex \
+                 $(PERSONAL_TEX)
 
 FR_SOURCES = $(COMMON_SOURCES) $(CONTENT_FR)
 EN_SOURCES = $(COMMON_SOURCES) $(CONTENT_EN)
@@ -71,8 +73,13 @@ with_image_fr:  $(BUILD_DIR)/resume_with_image_fr.pdf
 no_image_fr:    $(BUILD_DIR)/resume_no_image_fr.pdf
 
 # ===== Content generation: YAML → LaTeX =====
-generate: $(CONTENT_EN) $(CONTENT_FR)
+generate: $(PERSONAL_TEX) $(CONTENT_EN) $(CONTENT_FR)
 	@printf "$(BLUE)$(NAME): $(GREEN)LaTeX content generated [√]$(RESET)\n"
+
+$(PERSONAL_TEX): $(DATA_FILE) scripts/generate_tex.py
+	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)$(DATA_FILE) → $(PERSONAL_TEX)$(RESET)"
+	@$(PYTHON) scripts/generate_tex.py $(DATA_FILE) $(PERSONAL_TEX) personal
+	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Generated → $(PERSONAL_TEX) [√]$(RESET)\n"
 
 $(CONTENT_EN): $(DATA_FILE) scripts/generate_tex.py
 	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)$(DATA_FILE) → $(CONTENT_EN)$(RESET)"
@@ -84,35 +91,20 @@ $(CONTENT_FR): $(DATA_FILE) scripts/generate_tex.py
 	@$(PYTHON) scripts/generate_tex.py $(DATA_FILE) $(CONTENT_FR) fr
 	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Generated → $(CONTENT_FR) [√]$(RESET)\n"
 
-# ===== Pattern rule: build build/foo.pdf from build/foo.tex =====
-# We cd into build/ (your sources live there) and silence latexmk output,
-# redirecting full logs to build/logs/foo.log. Aux files are cleaned right after.
+# ===== Compile rule macro =====
+# Usage: $(eval $(call compile_rule,<variant>,<sources>))
+define compile_rule
+$(BUILD_DIR)/resume_$(1).pdf: $(BUILD_DIR)/resume_$(1).tex $(2) | $(BUILD_DIR) $(LOG_DIR)
+	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)resume_$(1).tex → resume_$(1).pdf$(RESET)"
+	@cd $(BUILD_DIR) && $(LATEXMK) $(LATEX_FLAGS) resume_$(1).tex > "$(LOG_DIR)/resume_$(1).log" 2>&1
+	@cd $(BUILD_DIR) && $(LATEXMK) -c resume_$(1).tex > /dev/null 2>&1
+	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Built → $$@ [√]$(RESET)\n"
+endef
 
-# French resumes depend on French content
-$(BUILD_DIR)/resume_with_image_fr.pdf: $(BUILD_DIR)/resume_with_image_fr.tex $(FR_SOURCES) $(WITH_IMAGE_SOURCES) | $(BUILD_DIR) $(LOG_DIR)
-	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)resume_with_image_fr.tex → resume_with_image_fr.pdf$(RESET)"
-	@cd $(BUILD_DIR) && $(LATEXMK) $(LATEX_FLAGS) resume_with_image_fr.tex > "$(LOG_DIR)/resume_with_image_fr.log" 2>&1
-	@cd $(BUILD_DIR) && $(LATEXMK) -c resume_with_image_fr.tex > /dev/null 2>&1
-	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Built → $@ [√]$(RESET)\n"
-
-$(BUILD_DIR)/resume_no_image_fr.pdf: $(BUILD_DIR)/resume_no_image_fr.tex $(FR_SOURCES) $(NO_IMAGE_SOURCES) | $(BUILD_DIR) $(LOG_DIR)
-	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)resume_no_image_fr.tex → resume_no_image_fr.pdf$(RESET)"
-	@cd $(BUILD_DIR) && $(LATEXMK) $(LATEX_FLAGS) resume_no_image_fr.tex > "$(LOG_DIR)/resume_no_image_fr.log" 2>&1
-	@cd $(BUILD_DIR) && $(LATEXMK) -c resume_no_image_fr.tex > /dev/null 2>&1
-	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Built → $@ [√]$(RESET)\n"
-
-# English resumes depend on English content
-$(BUILD_DIR)/resume_with_image_en.pdf: $(BUILD_DIR)/resume_with_image_en.tex $(EN_SOURCES) $(WITH_IMAGE_SOURCES) | $(BUILD_DIR) $(LOG_DIR)
-	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)resume_with_image_en.tex → resume_with_image_en.pdf$(RESET)"
-	@cd $(BUILD_DIR) && $(LATEXMK) $(LATEX_FLAGS) resume_with_image_en.tex > "$(LOG_DIR)/resume_with_image_en.log" 2>&1
-	@cd $(BUILD_DIR) && $(LATEXMK) -c resume_with_image_en.tex > /dev/null 2>&1
-	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Built → $@ [√]$(RESET)\n"
-
-$(BUILD_DIR)/resume_no_image_en.pdf: $(BUILD_DIR)/resume_no_image_en.tex $(EN_SOURCES) $(NO_IMAGE_SOURCES) | $(BUILD_DIR) $(LOG_DIR)
-	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)resume_no_image_en.tex → resume_no_image_en.pdf$(RESET)"
-	@cd $(BUILD_DIR) && $(LATEXMK) $(LATEX_FLAGS) resume_no_image_en.tex > "$(LOG_DIR)/resume_no_image_en.log" 2>&1
-	@cd $(BUILD_DIR) && $(LATEXMK) -c resume_no_image_en.tex > /dev/null 2>&1
-	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Built → $@ [√]$(RESET)\n"
+$(eval $(call compile_rule,with_image_en,$(EN_SOURCES) $(WITH_IMAGE_SOURCES)))
+$(eval $(call compile_rule,no_image_en,$(EN_SOURCES) $(NO_IMAGE_SOURCES)))
+$(eval $(call compile_rule,with_image_fr,$(FR_SOURCES) $(WITH_IMAGE_SOURCES)))
+$(eval $(call compile_rule,no_image_fr,$(FR_SOURCES) $(NO_IMAGE_SOURCES)))
 
 # Ensure dirs exist
 $(BUILD_DIR):
@@ -134,7 +126,7 @@ clean:
 clean-all: clean
 	@printf "$(BLUE)$(NAME): $(YELLOW)Removing PDFs and generated content$(RESET)\n"
 	@rm -f $(BUILD_DIR)/*.pdf
-	@rm -f $(CONTENT_EN) $(CONTENT_FR)
+	@rm -f $(PERSONAL_TEX) $(CONTENT_EN) $(CONTENT_FR)
 	@printf "$(BLUE)$(NAME): $(GREEN)Done.$(RESET)\n"
 
 re: clean-all all

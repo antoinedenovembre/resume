@@ -8,8 +8,8 @@
     % left column: photo
     \begin{tikzpicture}
         \node [inner sep=0pt] at (0,0) {\includegraphics[width=2.5cm]{../assets/photo.jpg}};
-        \draw [white, rounded corners=0.1cm, line width=0.1cm] 
-            (current bounding box.north west) -- 
+        \draw [white, rounded corners=0.1cm, line width=0.1cm]
+            (current bounding box.north west) --
             (current bounding box.north east) --
             (current bounding box.south east) --
             (current bounding box.south west) -- cycle
@@ -21,32 +21,32 @@
         \raggedright
         \setlength{\emergencystretch}{2em}
         \vspace*{-1.0cm}
-        \textbf{\fontsize{24pt}{24pt}\selectfont Antoine Duteyrat}
+        \textbf{\fontsize{24pt}{24pt}\selectfont \PersonName}
 
         \vspace*{0.5cm}
 
         \normalsize
-        \mbox{{\color{black}\footnotesize\faMapMarker*}\hspace*{0.13cm}Saint-Étienne}%
+        \mbox{{\color{black}\footnotesize\faMapMarker*}\hspace*{0.13cm}\PersonLocation}%
         \kern 0.25 cm%
         \AND%
         \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{mailto:aduteyrat@gmail.com}{\color{black}{\footnotesize\faEnvelope[regular]}\hspace*{0.13cm}aduteyrat@gmail.com}}%
+        \mbox{\hrefWithoutArrow{mailto:\PersonEmail}{\color{black}{\footnotesize\faEnvelope[regular]}\hspace*{0.13cm}\PersonEmail}}%
         \kern 0.25 cm%
         \AND%
         \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{tel:+33-06-30-33-98-18}{\color{black}{\footnotesize\faPhone*}\hspace*{0.13cm}06 30 33 98 18}}%
+        \mbox{\hrefWithoutArrow{tel:\PersonPhoneTel}{\color{black}{\footnotesize\faPhone*}\hspace*{0.13cm}\PersonPhoneDisplay}}%
         \kern 0.25 cm%
         \AND%
         \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{https://antoinedenovembre.com/}{\color{black}{\footnotesize\faLink}\hspace*{0.13cm}antoinedenovembre.com}}%
+        \mbox{\hrefWithoutArrow{\PersonWebsiteURL}{\color{black}{\footnotesize\faLink}\hspace*{0.13cm}\PersonWebsiteDisplay}}%
         \kern 0.25 cm%
         \AND%
         \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{https://linkedin.com/in/antoine-duteyrat/}{\color{black}{\footnotesize\faLinkedinIn}\hspace*{0.13cm}LinkedIn}}%
+        \mbox{\hrefWithoutArrow{\PersonLinkedinURL}{\color{black}{\footnotesize\faLinkedinIn}\hspace*{0.13cm}\PersonLinkedinDisplay}}%
         \kern 0.25 cm%
         \AND%
         \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{https://github.com/antoinedenovembre}{\color{black}{\footnotesize\faGithub}\hspace*{0.13cm}antoinedenovembre}}%
+        \mbox{\hrefWithoutArrow{\PersonGithubURL}{\color{black}{\footnotesize\faGithub}\hspace*{0.13cm}\PersonGithubDisplay}}%
     \end{minipage}
 \end{tabular}
 \end{header}

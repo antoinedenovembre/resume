@@ -13,6 +13,9 @@ permissions:
 jobs:
   compile:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        variant: [with_image_en, with_image_fr, no_image_en, no_image_fr]
 
     steps:
       - name: Checkout repository
@@ -26,50 +29,53 @@ jobs:
       - name: Generate LaTeX content from YAML
         run: |
           pip install pyyaml
+          python scripts/generate_tex.py data/resume.yml src/content/personal.tex personal
           python scripts/generate_tex.py data/resume.yml src/content/resume_content_en.tex en
           python scripts/generate_tex.py data/resume.yml src/content/resume_content_fr.tex fr
 
-      - name: Compile resume with image (English)
+      - name: Compile resume (${{ matrix.variant }})
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: resume_with_image_en.tex
+          root_file: resume_${{ matrix.variant }}.tex
           working_directory: build
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
 
-      - name: Compile resume with image (French)
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: resume_with_image_fr.tex
-          working_directory: build
-          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
-
-      - name: Compile resume without image (English)
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: resume_no_image_en.tex
-          working_directory: build
-          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
-
-      - name: Compile resume without image (French)
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: resume_no_image_fr.tex
-          working_directory: build
-          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
-
-      - name: Upload PDF artifacts
+      - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
-          name: resume-pdfs
-          path: |
-            build/resume_with_image_en.pdf
-            build/resume_no_image_en.pdf
-            build/resume_with_image_fr.pdf
-            build/resume_no_image_fr.pdf
+          name: pdf-${{ matrix.variant }}
+          path: build/resume_${{ matrix.variant }}.pdf
           retention-days: 30
 
+  release:
+    needs: compile
+    runs-on: ubuntu-latest
+    if: >-
+      (github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')) ||
+      (startsWith(github.ref, 'refs/tags/') && github.ref != 'refs/tags/latest')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all PDF artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: pdf-*
+          merge-multiple: true
+          path: build
+
+      - name: Prepare release files
+        run: |
+          cp build/resume_with_image_en.pdf resume-with-image-en.pdf
+          cp build/resume_no_image_en.pdf resume-no-image-en.pdf
+          cp build/resume_with_image_fr.pdf resume-with-image-fr.pdf
+          cp build/resume_no_image_fr.pdf resume-no-image-fr.pdf
+          cp build/resume_with_image_en.pdf resume_en.pdf
+          cp build/resume_with_image_fr.pdf resume_fr.pdf
+
       - name: Delete existing latest release
-        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        if: github.ref == 'refs/heads/main'
         continue-on-error: true
         run: |
           gh release delete latest --yes || true
@@ -77,22 +83,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Prepare files for release
-        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
-        run: |
-          # Copy and rename PDFs for consistent naming
-          # Use "with image" versions as the default resume files
-          cp build/resume_with_image_en.pdf resume-with-image-en.pdf
-          cp build/resume_no_image_en.pdf resume-no-image-en.pdf
-          cp build/resume_with_image_fr.pdf resume-with-image-fr.pdf
-          cp build/resume_no_image_fr.pdf resume-no-image-fr.pdf
-          # Create simplified names for easy access (using with-image versions as default)
-          cp build/resume_with_image_en.pdf resume_en.pdf
-          cp build/resume_with_image_fr.pdf resume_fr.pdf
-          ls -la *.pdf
-
-      - name: Create Latest Release
-        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+      - name: Create latest release
+        if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
@@ -114,20 +106,8 @@ jobs:
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create Tagged Release
-        if: startsWith(github.ref, 'refs/tags/') && github.ref != 'refs/tags/latest'
-        run: |
-          # Copy and rename PDFs for tagged releases too
-          cp build/resume_with_image_en.pdf resume-with-image-en.pdf
-          cp build/resume_no_image_en.pdf resume-no-image-en.pdf
-          cp build/resume_with_image_fr.pdf resume-with-image-fr.pdf
-          cp build/resume_no_image_fr.pdf resume-no-image-fr.pdf
-          # Create simplified names for easy access (using with-image versions as default)
-          cp build/resume_with_image_en.pdf resume_en.pdf
-          cp build/resume_with_image_fr.pdf resume_fr.pdf
-
-      - name: Upload Tagged Release
-        if: startsWith(github.ref, 'refs/tags/') && github.ref != 'refs/tags/latest'
+      - name: Create tagged release
+        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: resume-with-image-en.pdf,resume-no-image-en.pdf,resume-with-image-fr.pdf,resume-no-image-fr.pdf,resume_en.pdf,resume_fr.pdf

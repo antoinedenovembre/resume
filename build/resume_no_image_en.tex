@@ -1,5 +1,8 @@
 \documentclass[10pt, a4paper]{article}
 
+% Personal info (generated from data/resume.yml) – must come before packages.tex
+\input{../src/content/personal.tex}
+
 % Do not define \includeimage to exclude image-related packages and tikz
 
 % Load configuration files
@@ -9,10 +12,10 @@
 
 \begin{document}
     \initdocument
-    
+
     % Include header without image
     \input{../src/layout/header_no_image.tex}
-    
+
     % Include resume content
     \input{../src/content/resume_content_en.tex}
 \end{document}

@@ -1,3 +1,16 @@
+personal:
+  name: "Antoine Duteyrat"
+  location: "Saint-Étienne"
+  email: "aduteyrat@gmail.com"
+  phone_display: "06 30 33 98 18"
+  phone_tel: "+33-06-30-33-98-18"
+  website_url: "https://antoinedenovembre.com/"
+  website_display: "antoinedenovembre.com"
+  linkedin_url: "https://linkedin.com/in/antoine-duteyrat/"
+  linkedin_display: "LinkedIn"
+  github_url: "https://github.com/antoinedenovembre"
+  github_display: "antoinedenovembre"
+
 en:
   experience:
     - company: "Abylsen"
