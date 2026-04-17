@@ -1,5 +1,8 @@
 \documentclass[10pt, a4paper]{article}
 
+% Personal info (generated from data/resume.yml) – must come before packages.tex
+\input{../src/content/personal.tex}
+
 % Define that we want to include image
 \def\includeimage{}
 
@@ -10,10 +13,10 @@
 
 \begin{document}
     \initdocument
-    
+
     % Include header with image
     \input{../src/layout/header_with_image.tex}
-    
+
     % Include resume content
     \input{../src/content/resume_content_en.tex}
 \end{document}
