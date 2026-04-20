@@ -3,6 +3,7 @@
 [![Last build](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml/badge.svg)](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml)
 [![Latest Release](https://img.shields.io/github/v/release/antoinedenovembre/resume?label=latest)](../../releases/latest)
 [![Pages](https://img.shields.io/badge/pages-live-brightgreen)](https://antoinedenovembre.github.io/resume/)
+[![ATS-friendly](https://img.shields.io/badge/ATS--friendly-%E2%9C%93-success)](https://github.com/antoinedenovembre/resume/releases/latest/download/resume-no-image-en.pdf)
 
 A clean, modular LaTeX resume with multilingual support (French & English), optimized for both human readability and ATS parsing. Automatically compiled with GitHub Actions and updated on every push.
 
@@ -37,6 +38,18 @@ Go to **[Actions → Compile resume](../../actions/workflows/compile-resume.yml)
   <img src="assets/previews/preview_fr.png" alt="CV Français" width="45%"/>
   <img src="assets/previews/preview_en.png" alt="Resume English" width="45%"/>
 </div>
+
+## How it works
+
+```mermaid
+flowchart LR
+    A["Edit\ndata/resume.yml"] -->|git push| B["GitHub Actions"]
+    B --> C["Compile 4 PDF variants\nEN/FR × photo/no-photo"]
+    C --> D["Generate PNG previews\n→ commit to assets/previews/"]
+    C --> E["Publish GitHub Release\nwith PDF attachments"]
+    D --> F["GitHub Pages\nauto-updated"]
+    E --> F
+```
 
 ## For Developers
 
