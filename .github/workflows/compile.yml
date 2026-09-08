@@ -1,0 +1,48 @@
+name: Compile Resume
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        variant: [with_image_en, with_image_fr, no_image_en, no_image_fr]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Generate LaTeX content from YAML
+        run: |
+          pip install pyyaml
+          python scripts/generate_tex.py data/resume.yml src/content/personal.tex personal
+          python scripts/generate_tex.py data/resume.yml src/content/resume_content_en.tex en
+          python scripts/generate_tex.py data/resume.yml src/content/resume_content_fr.tex fr
+
+      - name: Compile resume (${{ matrix.variant }})
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: resume_${{ matrix.variant }}.tex
+          working_directory: build
+          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdf-${{ matrix.variant }}
+          path: build/resume_${{ matrix.variant }}.pdf
+          retention-days: 30

@@ -2,7 +2,7 @@ name: Generate Previews
 
 on:
   workflow_run:
-    workflows: ["Compile Resume"]
+    workflows: ["Release Resume"]
     types: [completed]
 
 permissions:
@@ -21,9 +21,7 @@ jobs:
       - name: Install deps
         run: |
           sudo apt-get update
-          sudo apt-get install -y imagemagick ghostscript poppler-utils
-          # Configure ImageMagick to allow PDF processing
-          sudo sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' /etc/ImageMagick-6/policy.xml
+          sudo apt-get install -y poppler-utils
 
       - name: Download latest release PDFs
         run: |
