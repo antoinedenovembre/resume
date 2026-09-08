@@ -1,0 +1,106 @@
+name: Release Resume
+
+on:
+  workflow_run:
+    workflows: ["Compile Resume"]
+    types: [completed]
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event != 'pull_request' }}
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # head_branch holds the tag name (not "refs/tags/...") for tag-triggered runs; this
+      # is undocumented GitHub behavior and only a best-effort signal. Moot today anyway:
+      # compile.yml has no `push: tags:` trigger, so this condition never evaluates true.
+      IS_MAIN_LATEST: ${{ github.event.workflow_run.head_branch == 'main' && (github.event.workflow_run.event == 'push' || github.event.workflow_run.event == 'workflow_dispatch') }}
+      IS_TAG: ${{ github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch != 'main' && github.event.workflow_run.head_branch != 'latest' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Download all PDF artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: pdf-*
+          merge-multiple: true
+          path: build
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare release files
+        run: |
+          cp build/resume_with_image_en.pdf resume-with-image-en.pdf
+          cp build/resume_no_image_en.pdf resume-no-image-en.pdf
+          cp build/resume_with_image_fr.pdf resume-with-image-fr.pdf
+          cp build/resume_no_image_fr.pdf resume-no-image-fr.pdf
+          cp build/resume_with_image_en.pdf resume_en.pdf
+          cp build/resume_with_image_fr.pdf resume_fr.pdf
+
+      - name: Archive current "latest" as a dated version
+        if: env.IS_MAIN_LATEST == 'true'
+        continue-on-error: true
+        run: |
+          if gh release view latest >/dev/null 2>&1; then
+            PREV_SHA=$(gh release view latest --json targetCommitish -q .targetCommitish)
+            PREV_DATE=$(gh release view latest --json createdAt -q .createdAt)
+            VERSION="v$(date -u -d "$PREV_DATE" +%Y.%m.%d-%H%M%S)"
+            mkdir -p archive
+            gh release download latest --dir archive --pattern "*.pdf" --clobber
+            gh release create "$VERSION" \
+              --target "$PREV_SHA" \
+              --title "Resume $VERSION" \
+              --notes "Automatic dated snapshot of the resume that was previously published as \"latest\" (commit $PREV_SHA)." \
+              archive/*.pdf
+          else
+            echo "No existing 'latest' release found — nothing to archive."
+          fi
+
+      - name: Delete existing latest release
+        if: env.IS_MAIN_LATEST == 'true'
+        continue-on-error: true
+        run: |
+          gh release delete latest --yes || true
+          git push --delete origin latest || true
+
+      - name: Create latest release
+        if: env.IS_MAIN_LATEST == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          target_commitish: ${{ github.event.workflow_run.head_sha }}
+          name: "Latest resume"
+          body: |
+            Latest compiled resume PDFs from commit ${{ github.event.workflow_run.head_sha }}
+
+            **Files included:**
+            - `resume-with-image-en.pdf` - Resume with headshot (English)
+            - `resume-no-image-en.pdf` - Resume without headshot (English)
+            - `resume-with-image-fr.pdf` - Resume with headshot (French)
+            - `resume-no-image-fr.pdf` - Resume without headshot (French)
+            - `resume_en.pdf` - Default English resume (with photo)
+            - `resume_fr.pdf` - Default French resume (with photo)
+
+            **Build date:** ${{ github.event.workflow_run.head_commit.timestamp }}
+          files: resume-with-image-en.pdf,resume-no-image-en.pdf,resume-with-image-fr.pdf,resume-no-image-fr.pdf,resume_en.pdf,resume_fr.pdf
+          draft: false
+          prerelease: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create tagged release
+        if: env.IS_TAG == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.workflow_run.head_branch }}
+          target_commitish: ${{ github.event.workflow_run.head_sha }}
+          files: resume-with-image-en.pdf,resume-no-image-en.pdf,resume-with-image-fr.pdf,resume-no-image-fr.pdf,resume_en.pdf,resume_fr.pdf
+          draft: false
+          token: ${{ secrets.GITHUB_TOKEN }}

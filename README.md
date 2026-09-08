@@ -1,6 +1,6 @@
 # Resume Repository
 
-[![Last build](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml/badge.svg)](https://github.com/antoinedenovembre/resume/actions/workflows/compile-resume.yml)
+[![Last build](https://github.com/antoinedenovembre/resume/actions/workflows/compile.yml/badge.svg)](https://github.com/antoinedenovembre/resume/actions/workflows/compile.yml)
 [![Latest Release](https://img.shields.io/github/v/release/antoinedenovembre/resume?label=latest)](../../releases/latest)
 [![Pages](https://img.shields.io/badge/pages-live-brightgreen)](https://antoinedenovembre.github.io/resume/)
 [![ATS-friendly](https://img.shields.io/badge/ATS--friendly-%E2%9C%93-success)](https://github.com/antoinedenovembre/resume/releases/latest/download/resume-no-image-en.pdf)
@@ -30,7 +30,7 @@ The file has `en:` and `fr:` top-level sections. Just update both sections with 
 Use `**bold text**` for bold and `_italic text_` for italic.
 
 ### Manual rebuild (without editing)
-Go to **[Actions → Compile resume](../../actions/workflows/compile-resume.yml)** and click **Run workflow** to trigger a fresh build without changing any file. This works from the GitHub mobile app too.
+Go to **[Actions → Compile Resume](../../actions/workflows/compile.yml)** and click **Run workflow** to trigger a fresh build without changing any file. This works from the GitHub mobile app too.
 
 ## Preview
 
