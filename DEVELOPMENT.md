@@ -15,7 +15,7 @@ This document contains detailed information for developers who want to work on o
 # Generate LaTeX content files from the YAML data (optional; use if you want to generate content without building PDFs)
 make generate
 
-# Build all 16 PDFs: 4 styles × with/without photo × EN/FR (recommended)
+# Build all 12 PDFs: 3 styles × with/without photo × EN/FR (recommended)
 make all
 
 # Build all English versions (every style, with and without photo)
@@ -27,7 +27,6 @@ make fr
 # Build every variant of one style
 make default
 make tech
-make minimal
 make sidebar
 
 # Build a specific variant: <style>_<with|no>_image_<en|fr>
@@ -60,8 +59,8 @@ PDFs are written next to their root file: `build/<style>/resume_<variant>.pdf`.
 
 Every push to the `main` branch automatically:
 
-1. Compiles all 16 resume versions (4 styles × English/French × with/without photo), one CI job each
-2. Creates a "latest" release with one zip per style (`resume-default.zip`, `resume-tech.zip`, `resume-minimal.zip`, `resume-sidebar.zip`) plus the default-style PDFs used by the README and site links
+1. Compiles all 12 resume versions (3 styles × English/French × with/without photo), one CI job each
+2. Creates a "latest" release with one zip per style (`resume-default.zip`, `resume-tech.zip`, `resume-sidebar.zip`) plus the default-style PDFs used by the README and site links
 3. Regenerates the previews in `assets/previews/` (one per style, plus the FR/EN previews used by the site)
 4. Stores artifacts for 30 days
 
@@ -70,7 +69,7 @@ Every push to the `main` branch automatically:
 ```
 resume/
 ├── .github/workflows/
-│   ├── compile.yml            # Builds the 16 PDFs (matrix: style × variant)
+│   ├── compile.yml            # Builds the 12 PDFs (matrix: style × variant)
 │   ├── release.yml            # Publishes "latest" (one zip per style) and archives the previous one
 │   └── preview.yml            # Regenerates assets/previews/ after a release
 ├── assets/
@@ -79,7 +78,6 @@ resume/
 ├── build/
 │   ├── default/resume_{with,no}_image_{en,fr}.tex   # Root files, one folder per style
 │   ├── tech/…
-│   ├── minimal/…
 │   └── sidebar/…
 ├── data/
 │   └── resume.yml             # Single data file for all languages (EN + FR)
@@ -116,7 +114,6 @@ resume/
 |-------|------|-------|
 | `default` | Original layout, icons, blue links | `style.tex` is empty: the base rendering is used as is |
 | `tech` | Times font, ruled uppercase sections, date column on the left | Uses an entry's `short_name` (e.g. `UQAC`) when the heading would not fit on one line |
-| `minimal` | Source Sans, gray letter-spaced titles, no rules or icons | Round photo on the right of the name |
 | `sidebar` | Roboto, colored left column with photo, contacts and skills | Skills are collected while the content is read and drawn in the sidebar at shipout, so the resume must stay on one page |
 
 ### Adding a style
@@ -159,7 +156,7 @@ resume/
 - `needspace` - Intelligent page break management
 
 ### Style-specific Packages
-- `newtxtext` (tech), `sourcesanspro` and `microtype` (minimal), `roboto` (sidebar), `xstring` (minimal and sidebar)
+- `newtxtext` (tech), `roboto` and `xstring` (sidebar)
 
 ### Conditional Packages (Photo Version Only)
 - `graphicx` - Image inclusion for profile photo

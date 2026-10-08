@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-- Four resume styles built from the same YAML: `default` (original layout), `tech` (Times, date column on the left), `minimal` (airy sans-serif) and `sidebar` (colored left column)
+- Three resume styles built from the same YAML: `default` (original layout), `tech` (Times, date column on the left) and `sidebar` (colored left column)
 - Sources reorganized per style (`src/styles/<style>/`, `build/<style>/`); the generator now emits layout-neutral macros
 - Optional `short_name` for entries (used by the tech style when a heading is too long)
 - Releases ship one zip per style; archived releases are tagged `dd.mm.yyyy`

@@ -6,7 +6,7 @@ BUILD_DIR   = build
 LOG_DIR     := $(abspath $(BUILD_DIR)/logs)
 
 # Styles live in src/styles/<style>/, root files in build/<style>/resume_<variant>.tex
-STYLES      = default tech minimal sidebar
+STYLES      = default tech sidebar
 VARIANTS    = with_image_en no_image_en with_image_fr no_image_fr
 
 # All PDFs: build/<style>/resume_<variant>.pdf

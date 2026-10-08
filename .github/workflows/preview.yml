@@ -63,7 +63,7 @@ jobs:
 
       - name: Generate one preview per style (French, with photo)
         run: |
-          for style in default tech minimal sidebar; do
+          for style in default tech sidebar; do
             curl -fL -o "previews/resume-$style.zip" "https://github.com/${{ github.repository }}/releases/latest/download/resume-$style.zip"
             unzip -o -q "previews/resume-$style.zip" "resume-$style-with-image-fr.pdf" -d previews
             pdftoppm -png -f 1 -l 1 -r 110 -singlefile "previews/resume-$style-with-image-fr.pdf" "previews/preview_$style"
@@ -74,7 +74,7 @@ jobs:
           mkdir -p assets/previews
           mv previews/preview_en.png assets/previews/
           mv previews/preview_fr.png assets/previews/
-          for style in default tech minimal sidebar; do
+          for style in default tech sidebar; do
             mv "previews/preview_$style.png" assets/previews/
           done
 

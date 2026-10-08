@@ -35,7 +35,7 @@ jobs:
       - name: Prepare release files
         run: |
           # One zip per style, each holding the 4 variants (photo/no photo x EN/FR)
-          for style in default tech minimal sidebar; do
+          for style in default tech sidebar; do
             mkdir -p "zip/$style"
             for v in with-image-en no-image-en with-image-fr no-image-fr; do
               cp "build/pdf-${style}_${v//-/_}/resume_${v//-/_}.pdf" "zip/$style/resume-$style-$v.pdf"
@@ -96,7 +96,6 @@ jobs:
             **Files included:**
             - `resume-default.zip` - Default style, all 4 variants (with/without photo, EN/FR)
             - `resume-tech.zip` - Tech style, all 4 variants (with/without photo, EN/FR)
-            - `resume-minimal.zip` - Minimal style, all 4 variants (with/without photo, EN/FR)
             - `resume-sidebar.zip` - Sidebar style, all 4 variants (with/without photo, EN/FR)
             - `resume-with-image-en.pdf` - Default style with headshot (English)
             - `resume-no-image-en.pdf` - Default style without headshot (English)
@@ -106,7 +105,7 @@ jobs:
             - `resume_fr.pdf` - Default French resume (with photo)
 
             **Build date:** ${{ github.event.workflow_run.head_commit.timestamp }}
-          files: resume-default.zip,resume-tech.zip,resume-minimal.zip,resume-sidebar.zip,resume-with-image-en.pdf,resume-no-image-en.pdf,resume-with-image-fr.pdf,resume-no-image-fr.pdf,resume_en.pdf,resume_fr.pdf
+          files: resume-default.zip,resume-tech.zip,resume-sidebar.zip,resume-with-image-en.pdf,resume-no-image-en.pdf,resume-with-image-fr.pdf,resume-no-image-fr.pdf,resume_en.pdf,resume_fr.pdf
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}

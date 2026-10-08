@@ -1,7 +1,7 @@
 # Resume Project — Claude Code Guide
 
 ## What this project is
-Data-driven LaTeX resume generator producing 16 PDFs (4 styles: default/tech/minimal/sidebar × with/without photo × EN/FR) from a single YAML source.
+Data-driven LaTeX resume generator producing 12 PDFs (3 styles: default/tech/sidebar × with/without photo × EN/FR) from a single YAML source.
 
 ## Architecture
 ```
@@ -12,7 +12,7 @@ src/
   styles/<style>/        ← style.tex (overrides), header_with_image.tex, header_no_image.tex
   content/               ← GENERATED (gitignored): personal.tex, resume_content_{en,fr}.tex
 build/
-  <style>/resume_{with,no}_image_{en,fr}.tex ← root files (16, committed); \ResumeRoot = ../../
+  <style>/resume_{with,no}_image_{en,fr}.tex ← root files (12, committed); \ResumeRoot = ../../
   <style>/resume_*.pdf   ← compiled output (gitignored)
 ```
 
@@ -22,7 +22,7 @@ build/
 ## Build
 ```bash
 make              # build all 8 variants
-make default / make tech / make minimal / make sidebar  # build one style
+make default / make tech / make sidebar  # build one style
 make tech_no_image_fr     # build one variant
 make en / make fr # build one language
 make generate     # YAML → LaTeX only (no compilation)
@@ -67,13 +67,12 @@ Inline formatting in YAML values: `**bold**` → `\textbf{}`, `_italic_` → `\t
 |-------|------|
 | `default` | original layout, icons, blue links (empty override) |
 | `tech` | Times, uppercase ruled sections, date column on the left |
-| `minimal` | Source Sans, gray letter-spaced titles, no rules/icons |
 | `sidebar` | Roboto, colored left column (photo, contacts, skills drawn at shipout: must stay 1 page) |
 
 Adding a style: see DEVELOPMENT.md ("Adding a style"): style folder, 4 roots, `STYLES` in Makefile, CI matrix and the style loops in release/preview workflows.
 
 ## CI/CD
-- **compile** job: matrix over 4 styles × 4 variants, each uploads `build/<style>/resume_<variant>.pdf` as artifact `pdf-<style>_<variant>`
+- **compile** job: matrix over 3 styles × 4 variants, each uploads `build/<style>/resume_<variant>.pdf` as artifact `pdf-<style>_<variant>`
 - **release** job: publishes `resume-<style>.zip` (4 PDFs each) plus the default-style PDFs used by README/site links
 - **preview** job: after a release, regenerates `assets/previews/preview_<style>.png` (FR with photo) and `preview_{en,fr}.png`
 - Triggers on push to `main`: replaces the `latest` release and archives the previous one as a release tagged `dd.mm.yyyy`
