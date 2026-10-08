@@ -67,7 +67,7 @@ jobs:
             mkdir -p archive
             gh release download latest --dir archive --clobber
             gh release create "$VERSION" \
-              --target "$PREV_SHA" \
+              --target "${{ github.event.workflow_run.head_sha }}" \
               --title "Resume $VERSION" \
               --notes "Automatic dated snapshot of the resume that was previously published as \"latest\" (commit $PREV_SHA)." \
               archive/*
