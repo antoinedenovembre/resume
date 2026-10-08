@@ -3,7 +3,7 @@ personal:
   location: "Saint-Étienne"
   email: "aduteyrat@gmail.com"
   phone_display: "06 30 33 98 18"
-  phone_tel: "+33-06-30-33-98-18"
+  phone_tel: "+33-6-30-33-98-18"
   website_url: "https://antoinedenovembre.com/"
   website_display: "antoinedenovembre.com"
   linkedin_url: "https://linkedin.com/in/antoine-duteyrat/"
@@ -15,113 +15,116 @@ en:
   experience:
     - company: "Abylsen"
       location: "Saint-Héand, France"
-      period: "Dec 2025 - Now"
+      period: "Dec 2025 -- Present"
       title: "Embedded Software Integration Engineer"
       highlights:
-        - "Understood the software architecture of a system involving different **MCUs**, a **SOM** and **FPGA**"
-        - "Integrated multiple **CI/CD pipelines** (Build, SonarQube, Unit testing), creating multiple Docker images for stable development environments"
-        - "Embedded software development, using **Yocto Linux image** and a **Yocto-SDK** both with **CLI** and **Qt**"
+        - "Mapped the software architecture of a multi-processor system (several **MCUs**, a **SoM** and an **FPGA**)"
+        - "Integrated **CI/CD pipelines** (build, **SonarQube** analysis, unit tests) and built **Docker** images for reproducible development environments"
+        - "Developed embedded software on a **Yocto Linux** image with the ARM **Yocto SDK**, for both **CLI** tools and **Qt** applications"
 
     - company: "Safety Tech"
       location: "Brignais, France"
-      period: "Sept 2022 - Aug 2025"
-      title: "Image processing and engineering apprentice"
+      period: "Sep 2022 -- Aug 2025"
+      title: "Image Processing Engineering Apprentice"
       highlights:
-        - "Integrated cross-compiled software into a **Buildroot** Linux image and an **RTOS** for a hybrid embedded target using **Docker** and **CMake**."
-        - "Software development in **C/C++** using design patterns and **Bash** scripts for task automation, as well as maintenance of embedded devices (serial/SSH access, **flashing**)."
-        - "Designed and maintained **GitLab CI/CD** pipelines to automate building, testing, and deployment."
-        - "Participated in and facilitated an agile **SCRUM** methodology in an industrial context driven by the **V-Model**."
+        - "Integrated cross-compiled software into a **Buildroot** Linux image and an **RTOS** for a hybrid embedded target, using **Docker** and **CMake**"
+        - "Developed **C/C++** software applying design patterns, and automated tasks with **Bash** scripts"
+        - "Maintained embedded devices (serial/SSH access, **flashing**)"
+        - "Designed and maintained **GitLab CI/CD** pipelines automating build, test and deployment"
+        - "Implemented **CAN**, **Ethernet** and **MQTT** communication"
+        - "Took part in and facilitated **Scrum** ceremonies in an industrial project following the **V-model**"
 
     - company: "NTNU Gjøvik"
       location: "Gjøvik, Norway"
-      period: "Aug 2024 - Oct 2024"
-      title: "Image processing for detection and tracking intern"
+      period: "Aug 2024 -- Oct 2024"
+      title: "Computer Vision Intern (Detection and Tracking)"
       highlights:
-        - "Trained and evaluated **EfficientDet** and **YOLOv8** for animal detection in pens via **Ultralytics** and **TensorFlow**"
-        - "Implemented a **Barlow Twins** optimization algorithm for self-supervised learning on the EfficientDet model"
+        - "Trained and evaluated **EfficientDet** and **YOLOv8** for animal detection in enclosures, using **Ultralytics** and **TensorFlow**"
+        - "Implemented **Barlow Twins** self-supervised pre-training for the EfficientDet model"
 
   education:
     - institution: "Télécom Saint-Étienne"
       location: "Saint-Étienne, France"
-      period: "Sept 2022 - Aug 2025"
-      degree: "Master's degree in Image Processing and Photonics"
+      period: "Sep 2022 -- Aug 2025"
+      degree: "Master of Engineering in Imaging, Photonics and Smart Industries"
       highlights:
-        - "**Relevant coursework:** Deep Learning (in Python), Image Processing, 3D Imagery"
-        - "**Relevant information:** Apprenticeship with Safety Tech in Brignais, France"
+        - "**Relevant coursework:** Deep Learning (in Python), Image Processing, 3D Imaging"
+        - "**Work-study programme:** Apprenticeship with Safety Tech in Brignais, France"
 
     - institution: "Université du Québec à Chicoutimi"
       location: "Chicoutimi, Canada"
-      period: "Jan 2022 - May 2022"
+      period: "Jan 2022 -- May 2022"
       degree: "Exchange semester in Computer Science"
       highlights:
         - "**Relevant coursework:** Calculus II, Data Mining (in Python)"
 
     - institution: "Université Clermont Auvergne"
       location: "Clermont-Ferrand, France"
-      period: "Sept 2020 - July 2022"
+      period: "Sep 2020 -- Jul 2022"
       degree: "Associate's degree in Computer Science"
       highlights:
         - "**Relevant coursework:** OOP, C++ programming, Advanced algorithms"
 
   skills:
     languages: "French (native), English (C1, TOEIC 990/990)"
-    technical: "C, C++, Computer Networking, Machine and Deep Learning in Python (Ultralytics, TensorFlow), Web programming, Image processing, SCRUM project management"
-    interests: "Technology Trends, Video Games, Travelling, Cinema"
+    technical: "C, C++, Python, Bash, Embedded Linux (Yocto, Buildroot), RTOS, Qt, CAN, MQTT, Docker, CMake, GitLab CI/CD, SonarQube, Image processing, Deep Learning (TensorFlow, Ultralytics), Computer networking, Web programming, Scrum, V-model"
+    interests: "Technology trends, Video games, Travel, Cinema"
 
 fr:
   experience:
     - company: "Abylsen"
       location: "Saint-Héand, France"
-      period: "Déc 2025 - Aujourd'hui"
-      title: "Ingénieur Intégration Logicielle Embarquée"
+      period: "Déc 2025 -- Aujourd'hui"
+      title: "Ingénieur intégration logicielle embarquée"
       highlights:
-        - "Compréhension de l'architecture logicielle d'un système impliquant différents **MCUs**, une carte **SOM** et un **FPGA**"
-        - "Intégration de plusieurs **pipelines CI/CD**, création de plusieurs images **Docker** pour des environnements de développement stables"
-        - "Développement logiciel embarqué, utilisant une **image Linux Yocto** et un **SDK Yocto ARM** via **CLI** et avec **Qt**"
+        - "Analyse de l'architecture logicielle d'un système multiprocesseur (plusieurs **MCU**, un **SoM** et un **FPGA**)"
+        - "Intégration de **pipelines CI/CD** (compilation, analyse **SonarQube**, tests unitaires) et création d'images **Docker** pour des environnements de développement reproductibles"
+        - "Développement logiciel embarqué sur une **image Linux Yocto** avec le **SDK Yocto** ARM, en ligne de commande et sous **Qt**"
 
     - company: "Safety Tech"
       location: "Brignais, France"
-      period: "Sept 2022 - Août 2025"
-      title: "Alternant Ingénieur en Traitement d'Image"
+      period: "Sept 2022 -- Août 2025"
+      title: "Alternant ingénieur en traitement d'image"
       highlights:
-        - "Intégration de logiciels cross-compilés dans une image Linux **Buildroot** et un **RTOS** pour une cible embarquée hybride grâce à **Docker** et **CMake**."
-        - "Développement logiciel en C/C++ par l'utilisation de _design patterns_ et de scripts **Bash** pour l'automatisation de tâches, ainsi que la maintenance de dispositifs embarqués (accès série/SSH, **flashage**)."
-        - "Conception de pipelines **GitLab CI/CD** pour automatiser la compilation, les tests et le déploiement."
-        - "Travail avec de la communication **CAN**, **Ethernet** et **MQTT**."
-        - "Participation et animation d'une méthodologie agile **SCRUM** dans un contexte industriel piloté en **cycle en V**."
+        - "Intégration de logiciels cross-compilés dans une image Linux **Buildroot** et un **RTOS** pour une cible embarquée hybride, avec **Docker** et **CMake**"
+        - "Développement **C/C++** s'appuyant sur des _design patterns_ et automatisation de tâches par scripts **Bash**"
+        - "Maintenance de cibles embarquées (accès série/SSH, **flashage**)"
+        - "Conception et maintenance de pipelines **GitLab CI/CD** (compilation, tests, déploiement)"
+        - "Mise en œuvre de communications **CAN**, **Ethernet** et **MQTT**"
+        - "Participation aux rituels **Scrum** et animation de ceux-ci, dans un projet industriel en **cycle en V**"
 
     - company: "NTNU Gjøvik"
       location: "Gjøvik, Norvège"
-      period: "Août 2024 - Oct 2024"
-      title: "Stage en traitement d'image par apprentissage profond"
+      period: "Août 2024 -- Oct 2024"
+      title: "Stagiaire en vision par ordinateur (détection et suivi)"
       highlights:
-        - "Entraînement et évaluation de modèles **EfficientDet** et **YOLOv8** pour la détection d'animaux dans des enclos via **Ultralytics** et **TensorFlow**"
-        - "Mise en œuvre d'un algorithme d'optimisation **Barlow Twins** pour l'apprentissage non-supervisé sur le modèle EfficientDet"
+        - "Entraînement et évaluation de modèles **EfficientDet** et **YOLOv8** pour la détection d'animaux dans des enclos, avec **Ultralytics** et **TensorFlow**"
+        - "Mise en œuvre d'un pré-entraînement auto-supervisé **Barlow Twins** pour le modèle EfficientDet"
 
   education:
     - institution: "Télécom Saint-Étienne"
       location: "Saint-Étienne, France"
-      period: "Sept 2022 - Août 2025"
-      degree: "Diplôme d'Ingénieur en Image, Photonique et Smart-Industries"
+      period: "Sept 2022 -- Août 2025"
+      degree: "Diplôme d'ingénieur en Image, Photonique et Smart Industries"
       highlights:
-        - "**Cours principaux :** Deep Learning (en Python), Traitement d'Image, Imagerie 3D"
-        - "**Informations supplémentaires :** Alternance avec Safety Tech à Brignais, France"
+        - "**Cours principaux :** Deep Learning (en Python), Traitement d'image, Imagerie 3D"
+        - "**Rythme :** Alternance avec Safety Tech à Brignais, France"
 
     - institution: "Université du Québec à Chicoutimi"
       location: "Chicoutimi, Canada"
-      period: "Jan 2022 - Mai 2022"
+      period: "Janv 2022 -- Mai 2022"
       degree: "Semestre d'échange de DUT Informatique"
       highlights:
         - "**Cours principaux :** Calcul avancé II, Forage de données (en Python)"
 
     - institution: "Université Clermont Auvergne"
       location: "Clermont-Ferrand, France"
-      period: "Sept 2020 - Juil 2022"
+      period: "Sept 2020 -- Juil 2022"
       degree: "DUT en Informatique"
       highlights:
-        - "**Cours principaux :** Programmation Orientée Objet, C++, Algorithmique avancée"
+        - "**Cours principaux :** Programmation orientée objet, C++, Algorithmique avancée"
 
   skills:
-    languages: "Français (natif), Anglais (C1, TOEIC 990/990)"
-    technical: "C, C++, Réseaux, Machine et Deep Learning en Python (Ultralytics, TensorFlow), Programmation web, Traitement d'image, Gestion de projet SCRUM"
-    interests: "Tendances technologiques, Jeux-vidéos, Voyage, Cinéma"
+    languages: "Français (langue maternelle), Anglais (C1, TOEIC 990/990)"
+    technical: "C, C++, Python, Bash, Linux embarqué (Yocto, Buildroot), RTOS, Qt, CAN, MQTT, Docker, CMake, GitLab CI/CD, SonarQube, Traitement d'image, Deep Learning (TensorFlow, Ultralytics), Réseaux, Programmation web, Scrum, Cycle en V"
+    interests: "Tendances technologiques, Jeux vidéo, Voyages, Cinéma"

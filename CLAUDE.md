@@ -67,7 +67,7 @@ Inline formatting in YAML values: `**bold**` → `\textbf{}`, `_italic_` → `\t
 ## CI/CD
 - **compile** job: matrix over 4 variants, each uploads its PDF as artifact `pdf-<variant>`
 - **release** job: downloads all 4 PDFs, creates/updates GitHub release
-- Triggers on push to `main` (latest release) or a version tag (tagged release)
+- Triggers on push to `main`: replaces the `latest` release and archives the previous one as a dated release
 
 ## Adding a new section
 1. Add content to `data/resume.yml` under `en:` and `fr:`

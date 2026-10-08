@@ -63,6 +63,21 @@ def generate_tex(data: dict, lang: str = 'en') -> str:
     """Generate full LaTeX content from YAML resume data."""
     lines = []
 
+    # "Last updated" stamp, placed by \placelastupdatedtext at shipout
+    if lang == 'en':
+        months = ('January', 'February', 'March', 'April', 'May', 'June', 'July',
+                  'August', 'September', 'October', 'November', 'December')
+        stamp_prefix = 'Last updated in'
+    else:
+        months = ('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
+                  'août', 'septembre', 'octobre', 'novembre', 'décembre')
+        stamp_prefix = 'Mis à jour en'
+    month_cases = r'\or '.join(months)
+    lines.append(
+        f'\\def\\LastUpdatedText{{{stamp_prefix} \\ifcase\\month\\or {month_cases}\\fi\\ \\the\\year}}'
+    )
+    lines.append('')
+
     # Experience section
     exp_entries = data.get('experience', [])
     if exp_entries:
@@ -82,7 +97,7 @@ def generate_tex(data: dict, lang: str = 'en') -> str:
     # Skills section
     skills = data.get('skills', {})
     if skills:
-        section_title = 'Skills and Technologies' if lang == 'en' else 'Compétences et intérêts'
+        section_title = 'Skills and Interests' if lang == 'en' else 'Compétences et intérêts'
         lines.append(f'    \\section{{{section_title}}}')
 
         # French typography uses a space before the colon
