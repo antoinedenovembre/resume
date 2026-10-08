@@ -1,19 +1,19 @@
 # Resume Project — Claude Code Guide
 
 ## What this project is
-Data-driven LaTeX resume generator producing 4 PDF variants (with/without photo × EN/FR) from a single YAML source.
+Data-driven LaTeX resume generator producing 12 PDFs (3 styles: default/tech/sidebar × with/without photo × EN/FR) from a single YAML source.
 
 ## Architecture
 ```
 data/resume.yml          ← single source of truth (content + personal info)
-scripts/generate_tex.py  ← YAML → LaTeX converter
+scripts/generate_tex.py  ← YAML → LaTeX converter (emits semantic macros, no layout)
 src/
-  config/                ← packages.tex, style.tex, commands.tex
-  layout/                ← header_with_image.tex, header_no_image.tex
+  config/                ← shared: packages.tex, style.tex (base rendering = default style), commands.tex
+  styles/<style>/        ← style.tex (overrides), header_with_image.tex, header_no_image.tex
   content/               ← GENERATED (gitignored): personal.tex, resume_content_{en,fr}.tex
 build/
-  resume_{variant}.tex   ← root LaTeX files (4 variants, committed)
-  resume_{variant}.pdf   ← compiled output (gitignored)
+  <style>/resume_{with,no}_image_{en,fr}.tex ← root files (12, committed); \ResumeRoot = ../../
+  <style>/resume_*.pdf   ← compiled output (gitignored)
 ```
 
 ## Golden rule
@@ -21,11 +21,13 @@ build/
 
 ## Build
 ```bash
-make              # build all 4 variants
+make              # build all 8 variants
+make default / make tech / make sidebar  # build one style
+make tech_no_image_fr     # build one variant
 make en / make fr # build one language
 make generate     # YAML → LaTeX only (no compilation)
 make re           # clean + rebuild everything
-make tail-resume_with_image_en  # inspect LaTeX log
+make tail-default_resume_with_image_en  # inspect LaTeX log
 ```
 
 Dependencies: `latexmk`, `python3`, `pyyaml`
@@ -38,7 +40,11 @@ python scripts/generate_tex.py data/resume.yml src/content/resume_content_fr.tex
 ```
 
 `personal` mode emits `\def\PersonName{...}` etc. for all contact fields.
-`en`/`fr` modes emit experience, education, and skills sections.
+`en`/`fr` modes emit experience, education, and skills sections using semantic
+macros (`resumeentry`, `resumehighlights`, `resumeskillssection`, `resumeskills`,
+`\resumeskill`). Their base rendering lives in `src/config/style.tex`; each
+`src/styles/<style>/style.tex` redefines them. Optional `short_name` on an entry
+(e.g. `UQAC`) is used by the tech style when the heading would not fit on one line.
 
 ## YAML structure
 ```yaml
@@ -56,18 +62,20 @@ fr:                # French resume content
 
 Inline formatting in YAML values: `**bold**` → `\textbf{}`, `_italic_` → `\textit{}`
 
-## Variants
-| File | Image | Lang |
-|------|-------|------|
-| `resume_with_image_en.tex` | yes | EN |
-| `resume_no_image_en.tex`   | no  | EN |
-| `resume_with_image_fr.tex` | yes | FR |
-| `resume_no_image_fr.tex`   | no  | FR |
+## Styles
+| Style | Look |
+|-------|------|
+| `default` | original layout, icons, blue links (empty override) |
+| `tech` | Times, uppercase ruled sections, date column on the left |
+| `sidebar` | Roboto, colored left column (photo, contacts, skills drawn at shipout: must stay 1 page) |
+
+Adding a style: see DEVELOPMENT.md ("Adding a style"): style folder, 4 roots, `STYLES` in Makefile, CI matrix and the style loops in release/preview workflows.
 
 ## CI/CD
-- **compile** job: matrix over 4 variants, each uploads its PDF as artifact `pdf-<variant>`
-- **release** job: downloads all 4 PDFs, creates/updates GitHub release
-- Triggers on push to `main`: replaces the `latest` release and archives the previous one as a dated release
+- **compile** job: matrix over 3 styles × 4 variants, each uploads `build/<style>/resume_<variant>.pdf` as artifact `pdf-<style>_<variant>`
+- **release** job: publishes `resume-<style>.zip` (4 PDFs each) plus the default-style PDFs used by README/site links
+- **preview** job: after a release, regenerates `assets/previews/preview_<style>.png` (FR with photo) and `preview_{en,fr}.png`
+- Triggers on push to `main`: replaces the `latest` release and archives the previous one as a release tagged `dd.mm.yyyy`
 
 ## Adding a new section
 1. Add content to `data/resume.yml` under `en:` and `fr:`

@@ -1,0 +1,15 @@
+% ======================================================================
+% ===================== HEADER WITHOUT PHOTO ===========================
+% ======================================================================
+% Centered plain-text header (no icons), see style.tex
+
+\newcommand{\headersep}{\hspace{0.6em}\textbar\hspace{0.6em}}
+\begin{center}
+    {\fontsize{16pt}{18pt}\selectfont\bfseries\MakeUppercase{\PersonName}}\\[0.3em]
+    \PersonLocation%
+    \headersep\hrefWithoutArrow{tel:\PersonPhoneTel}{\PersonPhoneDisplay}%
+    \headersep\hrefWithoutArrow{mailto:\PersonEmail}{\PersonEmail}\\
+    \hrefWithoutArrow{\PersonWebsiteURL}{\PersonWebsiteDisplay}%
+    \headersep\hrefWithoutArrow{\PersonLinkedinURL}{\PersonLinkedinDisplay}%
+    \headersep\hrefWithoutArrow{\PersonGithubURL}{github.com/\PersonGithubDisplay}
+\end{center}

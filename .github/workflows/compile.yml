@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        style: [default, tech, sidebar]
         variant: [with_image_en, with_image_fr, no_image_en, no_image_fr]
 
     steps:
@@ -33,16 +34,16 @@ jobs:
           python scripts/generate_tex.py data/resume.yml src/content/resume_content_en.tex en
           python scripts/generate_tex.py data/resume.yml src/content/resume_content_fr.tex fr
 
-      - name: Compile resume (${{ matrix.variant }})
+      - name: Compile resume (${{ matrix.style }}_${{ matrix.variant }})
         uses: xu-cheng/latex-action@v3
         with:
           root_file: resume_${{ matrix.variant }}.tex
-          working_directory: build
+          working_directory: build/${{ matrix.style }}
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
-          name: pdf-${{ matrix.variant }}
-          path: build/resume_${{ matrix.variant }}.pdf
+          name: pdf-${{ matrix.style }}_${{ matrix.variant }}
+          path: build/${{ matrix.style }}/resume_${{ matrix.variant }}.pdf
           retention-days: 30

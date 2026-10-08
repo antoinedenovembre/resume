@@ -86,3 +86,30 @@
 }{
     \par\kern\topsep
 } % new environment for the header
+
+% Semantic entry commands emitted by scripts/generate_tex.py.
+% Variants can redefine them (see style_classic.tex) to change the layout.
+\newenvironment{resumeentry}[5][]{%
+    \begin{twocolentry}{\textbf{#4} \\ \textit{#5}}
+        \textbf{#2} \\
+        \textit{#3}
+    \end{twocolentry}%
+}{} % [#1 short name, unused here] #2 company/institution, #3 title/degree, #4 location, #5 period
+
+\newenvironment{resumehighlights}{%
+    \begin{onecolentry}%
+    \begin{highlights}%
+}{%
+    \end{highlights}%
+    \end{onecolentry}%
+} % bullet list inside a resumeentry
+
+\newenvironment{resumeskills}{}{} % wrapper around the skills lines
+
+\newcommand{\resumeskill}[2]{%
+    \begin{onecolentry}
+        \textbf{#1} #2
+    \end{onecolentry}%
+} % #1 label, #2 value
+
+\newcommand{\resumeskillssection}[1]{\section{#1}} % heading of the skills section

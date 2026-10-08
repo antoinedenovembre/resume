@@ -5,7 +5,7 @@
 [![Pages](https://img.shields.io/badge/pages-live-brightgreen)](https://antoinedenovembre.github.io/resume/)
 [![ATS-friendly](https://img.shields.io/badge/ATS--friendly-%E2%9C%93-success)](https://github.com/antoinedenovembre/resume/releases/latest/download/resume-no-image-en.pdf)
 
-A clean, modular LaTeX resume with multilingual support (French & English), optimized for both human readability and ATS parsing. Automatically compiled with GitHub Actions and updated on every push.
+A clean, modular LaTeX resume with multilingual support (French & English) and three visual styles, optimized for both human readability and ATS parsing. Automatically compiled with GitHub Actions and updated on every push.
 
 ## Quick Access
 
@@ -16,6 +16,9 @@ A clean, modular LaTeX resume with multilingual support (French & English), opti
 ### Browse Online
 - **Live preview:** [GitHub Pages](https://antoinedenovembre.github.io/resume/)
 - **All versions:** [Latest Release](https://github.com/antoinedenovembre/resume/releases/latest)
+
+### Download a style (zip with the 4 variants: with/without photo × FR/EN)
+[Default](https://github.com/antoinedenovembre/resume/releases/latest/download/resume-default.zip) · [Tech](https://github.com/antoinedenovembre/resume/releases/latest/download/resume-tech.zip) · [Sidebar](https://github.com/antoinedenovembre/resume/releases/latest/download/resume-sidebar.zip)
 
 ## Editing on Mobile (or anywhere)
 
@@ -32,21 +35,23 @@ Use `**bold text**` for bold and `_italic text_` for italic.
 ### Manual rebuild (without editing)
 Go to **[Actions → Compile Resume](../../actions/workflows/compile.yml)** and click **Run workflow** to trigger a fresh build without changing any file. This works from the GitHub mobile app too.
 
-## Preview
+## Styles
 
-<div align="center">
-  <img src="assets/previews/preview_fr.png" alt="CV Français" width="45%"/>
-  <img src="assets/previews/preview_en.png" alt="Resume English" width="45%"/>
-</div>
+Every style is generated from the same `data/resume.yml`, in 4 variants (with/without photo × FR/EN). Previews below: French, with photo.
+
+| Default | Tech | Sidebar |
+|:---:|:---:|:---:|
+| <img src="assets/previews/preview_default.png" alt="Default style" width="100%"/> | <img src="assets/previews/preview_tech.png" alt="Tech style" width="100%"/> | <img src="assets/previews/preview_sidebar.png" alt="Sidebar style" width="100%"/> |
+| Original layout, icons, blue accents | Times font, ruled uppercase sections, date column on the left | Colored left column with photo, contacts and skills |
 
 ## How it works
 
 ```mermaid
 flowchart LR
     A["Edit\ndata/resume.yml"] -->|git push| B["GitHub Actions"]
-    B --> C["Compile 4 PDF variants\nEN/FR × photo/no-photo"]
+    B --> C["Compile 12 PDFs\n3 styles × EN/FR × photo/no-photo"]
     C --> D["Generate PNG previews\n→ commit to assets/previews/"]
-    C --> E["Publish GitHub Release\nwith PDF attachments"]
+    C --> E["Publish GitHub Release\none zip per style"]
     D --> F["GitHub Pages\nauto-updated"]
     E --> F
 ```

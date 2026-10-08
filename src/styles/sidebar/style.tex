@@ -1,0 +1,105 @@
+% ======================================================================
+% =========================== SIDEBAR STYLE ============================
+% ======================================================================
+% Loaded after style.tex by the "sidebar" variants: a colored column on
+% the left (photo, name, contacts, skills) and the experience/education
+% entries on the right. Skills are collected while the content is read
+% and drawn in the sidebar when the page is shipped out (one-page resume).
+
+\makeatletter
+\usepackage[sfdefault]{roboto}
+\usepackage{xstring}
+
+\definecolor{sidebarBg}{HTML}{1F3A5F}
+\definecolor{sidebarAccent}{HTML}{1F3A5F}
+\definecolor{sidebarSoft}{HTML}{A9C1DD}
+\definecolor{sidebarMuted}{HTML}{6B6B6B}
+\hypersetup{urlcolor=sidebarAccent, linkcolor=sidebarAccent}
+
+\newlength{\sidebarwidth}
+\setlength{\sidebarwidth}{6.4 cm}
+\newlength{\sidebarpad}
+\setlength{\sidebarpad}{0.7 cm}
+\geometry{top=1.3 cm, bottom=1.2 cm, left=7.2 cm, right=1.2 cm}
+
+% Section titles (main column): accent uppercase with a thin accent rule
+\titleformat{\section}
+  {\needspace{4\baselineskip}\color{sidebarAccent}\large\bfseries}
+  {}{0pt}{\MakeUppercase}[\vspace{0.1ex}{\color{sidebarAccent}\titlerule[0.8pt]}]
+\titlespacing*{\section}{0pt}{1.6ex plus .3ex minus .2ex}{0.8ex plus .2ex minus .2ex}
+
+\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+
+% Entries: company + period, then title + location
+\renewenvironment{resumeentry}[5][]{%
+    \par\noindent
+    {\bfseries\color{sidebarAccent}#2}\hfill{\small\bfseries #5}\par\noindent
+    \textit{#3}\unskip\nobreak\hfill\penalty50\hskip1em\null\nobreak\hfill
+    \mbox{\small\color{sidebarMuted}#4}\par
+}{%
+    \par\vspace{0.7em}
+}
+
+\renewenvironment{resumehighlights}{%
+    \begin{itemize}[
+        label={\color{sidebarAccent}\small\textbullet},
+        topsep=0.2em,
+        partopsep=0pt,
+        parsep=0pt,
+        itemsep=0.1em,
+        leftmargin=0.4 cm
+    ]
+}{%
+    \end{itemize}
+}
+
+% Skills go to the sidebar instead of the main column
+\renewcommand{\resumeskillssection}[1]{}
+\renewenvironment{resumeskills}{}{}
+\newcommand{\sidebar@skills}{}
+\renewcommand{\resumeskill}[2]{%
+    \StrDel{#1}{:}[\sidebar@label]%
+    \xdef\sidebar@skills{\unexpanded\expandafter{\sidebar@skills}%
+        \noexpand\sidebarheading{\unexpanded\expandafter{\sidebar@label}}%
+        \unexpanded{#2\par}}%
+}
+
+% Sidebar building blocks
+\newcommand{\sidebarheading}[1]{%
+    \par\vspace{1.1em}
+    {\color{sidebarSoft}\footnotesize\bfseries\MakeUppercase{#1}}\par
+    \vspace{0.45em}{\color{sidebarSoft}\hrule width 1.2cm height 0.6pt}\vspace{0.5em}
+}
+\newcommand{\sidebaritem}[2]{%
+    \noindent\makebox[1.6em][l]{\color{sidebarSoft}\footnotesize #1}#2\par\vspace{0.25em}
+}
+\newcommand{\sidebarlink}[2]{\hrefWithoutArrow{#1}{\color{white}#2}}
+
+% \sidebarphoto is defined by the header (empty without photo)
+\providecommand{\sidebarphoto}{}
+
+\newcommand{\sidebarcontent}{%
+    \color{white}\raggedright\small
+    \sidebarphoto
+    {\fontsize{20pt}{24pt}\selectfont\bfseries\PersonName}\par
+    \sidebarheading{Contact}
+    \sidebaritem{\faMapMarker*}{\PersonLocation}
+    \sidebaritem{\faPhone*}{\sidebarlink{tel:\PersonPhoneTel}{\PersonPhoneDisplay}}
+    \sidebaritem{\faEnvelope[regular]}{\sidebarlink{mailto:\PersonEmail}{\PersonEmail}}
+    \sidebaritem{\faLink}{\sidebarlink{\PersonWebsiteURL}{\PersonWebsiteDisplay}}
+    \sidebaritem{\faLinkedinIn}{\sidebarlink{\PersonLinkedinURL}{\PersonLinkedinDisplay}}
+    \sidebaritem{\faGithub}{\sidebarlink{\PersonGithubURL}{\PersonGithubDisplay}}
+    \sidebar@skills
+}
+
+\newcommand{\placesidebar}{%
+    \AddToShipoutPictureBG*{%
+        \put(0,0){\color{sidebarBg}\rule{\sidebarwidth}{\paperheight}}%
+        \put(\LenToUnit{\sidebarpad},\LenToUnit{\paperheight-1.3cm}){%
+            \begin{minipage}[t]{\sidebarwidth-2\sidebarpad}%
+                \vspace{0pt}\sidebarcontent
+            \end{minipage}}%
+    }%
+}
+\makeatother

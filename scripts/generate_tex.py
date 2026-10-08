@@ -35,26 +35,19 @@ def generate_entry(entry: dict) -> list:
     title = format_text(entry.get('title', entry.get('degree', '')))
     location = format_text(entry.get('location', ''))
     period = format_text(entry.get('period', ''))
+    short_name = format_text(entry.get('short_name', ''))
 
-    lines.append(r'        \begin{twocolentry}{')
-    lines.append(f'\t\t\t\\textbf{{{location}}} \\\\')
-    lines.append(f'\t\t\t\\textit{{{period}}}')
-    lines.append(r'            }{')
-    lines.append(f'            \\textbf{{{company}}} \\\\')
-    lines.append(f'            \\textit{{{title}}}')
-    lines.append(r'            }')
-    lines.append(r'        \end{twocolentry}')
-    lines.append('')
+    lines.append(f'        \\begin{{resumeentry}}[{short_name}]{{{company}}}{{{title}}}{{{location}}}{{{period}}}')
 
     highlights = entry.get('highlights', [])
     if highlights:
-        lines.append(r'        \begin{onecolentry}')
-        lines.append(r'            \begin{highlights}')
+        lines.append(r'            \begin{resumehighlights}')
         for h in highlights:
             lines.append(f'                \\item {format_text(h)}')
-        lines.append(r'            \end{highlights}')
-        lines.append(r'        \end{onecolentry}')
-        lines.append('')
+        lines.append(r'            \end{resumehighlights}')
+
+    lines.append(r'        \end{resumeentry}')
+    lines.append('')
 
     return lines
 
@@ -98,7 +91,7 @@ def generate_tex(data: dict, lang: str = 'en') -> str:
     skills = data.get('skills', {})
     if skills:
         section_title = 'Skills and Interests' if lang == 'en' else 'Compétences et intérêts'
-        lines.append(f'    \\section{{{section_title}}}')
+        lines.append(f'    \\resumeskillssection{{{section_title}}}')
 
         # French typography uses a space before the colon
         colon = ':' if lang == 'en' else ' :'
@@ -116,13 +109,14 @@ def generate_tex(data: dict, lang: str = 'en') -> str:
                 'interests': 'Intérêts',
             }
 
+        lines.append(r'        \begin{resumeskills}')
         for key in ('languages', 'technical', 'interests'):
             value = skills.get(key)
             if value:
-                lines.append(r'        \begin{onecolentry}')
-                lines.append(f'            \\textbf{{{labels[key]}{colon}}} {format_text(value)}')
-                lines.append(r'        \end{onecolentry}')
+                lines.append(f'            \\resumeskill{{{labels[key]}{colon}}}{{{format_text(value)}}}')
                 lines.append('')
+        lines.append(r'        \end{resumeskills}')
+        lines.append('')
 
     return '\n'.join(lines) + '\n'
 
