@@ -1,6 +1,5 @@
 personal:
   name: "Antoine Duteyrat"
-  location: "Saint-Étienne"
   email: "aduteyrat@gmail.com"
   phone_display: "06 30 33 98 18"
   phone_tel: "+33-6-30-33-98-18"
@@ -12,6 +11,8 @@ personal:
   github_display: "antoinedenovembre"
 
 en:
+  summary: "Embedded software engineer with an image processing background, working on embedded Linux (Yocto, Buildroot), C/C++ and CI/CD to take software from development to integration on target."
+
   experience:
     - company: "Abylsen"
       location: "Saint-Héand, France"
@@ -74,6 +75,8 @@ en:
     interests: "Technology trends, Video games, Travel, Cinema"
 
 fr:
+  summary: "Ingénieur logiciel embarqué issu du traitement d'image, j'interviens sur Linux embarqué (Yocto, Buildroot), C/C++ et CI/CD, du développement jusqu'à l'intégration sur cible."
+
   experience:
     - company: "Abylsen"
       location: "Saint-Héand, France"

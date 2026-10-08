@@ -71,6 +71,13 @@ def generate_tex(data: dict, lang: str = 'en') -> str:
     )
     lines.append('')
 
+    # Summary (one sentence; only rendered by styles that redefine \resumesummary)
+    summary = data.get('summary')
+    if summary:
+        section_title = 'Summary' if lang == 'en' else 'Profil'
+        lines.append(f'    \\resumesummary{{{section_title}}}{{{format_text(summary)}}}')
+        lines.append('')
+
     # Experience section
     exp_entries = data.get('experience', [])
     if exp_entries:
@@ -124,7 +131,7 @@ def generate_tex(data: dict, lang: str = 'en') -> str:
 def generate_personal_tex(personal: dict) -> str:
     """Generate a LaTeX file of \\def commands for personal contact info."""
     required = (
-        'name', 'location', 'email',
+        'name', 'email',
         'phone_display', 'phone_tel',
         'website_url', 'website_display',
         'linkedin_url', 'linkedin_display',
@@ -140,7 +147,6 @@ def generate_personal_tex(personal: dict) -> str:
         '% Personal information – generated from data/resume.yml',
         '% Do not edit manually.',
         r'\def\PersonName{' + personal['name'] + '}',
-        r'\def\PersonLocation{' + personal['location'] + '}',
         r'\def\PersonEmail{' + personal['email'] + '}',
         r'\def\PersonPhoneDisplay{' + personal['phone_display'] + '}',
         r'\def\PersonPhoneTel{' + personal['phone_tel'] + '}',
