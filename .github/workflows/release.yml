@@ -52,7 +52,6 @@ jobs:
 
       - name: Archive current "latest" as a dated version
         if: env.IS_MAIN_LATEST == 'true'
-        continue-on-error: true
         run: |
           if gh release view latest >/dev/null 2>&1; then
             PREV_SHA=$(gh release view latest --json targetCommitish -q .targetCommitish)
