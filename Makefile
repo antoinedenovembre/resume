@@ -1,5 +1,5 @@
 # ===== Pretty, quiet LaTeX CV Makefile =====
-.PHONY: all en fr with_image_en no_image_en with_image_fr no_image_fr generate clean clean-all re test logs tail-%
+.PHONY: all en fr default tech generate clean clean-all re test logs tail-%
 
 # ===== Project =====
 NAME        = resume
@@ -7,10 +7,9 @@ BUILD_DIR   = build
 LOG_DIR     := $(abspath $(BUILD_DIR)/logs)
 
 # All doc basenames (without .tex/.pdf)
-DOCS        = resume_with_image_en \
-              resume_no_image_en  \
-              resume_with_image_fr \
-              resume_no_image_fr
+STYLES      = default tech
+VARIANTS    = with_image_en no_image_en with_image_fr no_image_fr
+DOCS        = $(foreach s,$(STYLES),$(addprefix resume_$(s)_,$(VARIANTS)))
 
 PDFS        = $(addprefix $(BUILD_DIR)/,$(addsuffix .pdf,$(DOCS)))
 
@@ -53,24 +52,27 @@ COMMON_SOURCES = src/config/packages.tex \
 FR_SOURCES = $(COMMON_SOURCES) $(CONTENT_FR)
 EN_SOURCES = $(COMMON_SOURCES) $(CONTENT_EN)
 
-WITH_IMAGE_SOURCES = src/layout/header_with_image.tex
-NO_IMAGE_SOURCES = src/layout/header_no_image.tex
+DEFAULT_SOURCES = src/config/style.tex
+TECH_SOURCES    = src/config/style.tex src/config/style_tech.tex
 
 # ===== Default targets =====
 all: en fr
 
 # Grouped builds
-en: $(BUILD_DIR)/resume_with_image_en.pdf $(BUILD_DIR)/resume_no_image_en.pdf
+en: $(foreach s,$(STYLES),$(BUILD_DIR)/resume_$(s)_with_image_en.pdf $(BUILD_DIR)/resume_$(s)_no_image_en.pdf)
 	@printf "$(BLUE)$(NAME): $(GREEN)English resumes built [√]$(RESET)\n"
 
-fr: $(BUILD_DIR)/resume_with_image_fr.pdf $(BUILD_DIR)/resume_no_image_fr.pdf
+fr: $(foreach s,$(STYLES),$(BUILD_DIR)/resume_$(s)_with_image_fr.pdf $(BUILD_DIR)/resume_$(s)_no_image_fr.pdf)
 	@printf "$(BLUE)$(NAME): $(GREEN)French resumes built [√]$(RESET)\n"
 
-# Friendly aliases
-with_image_en:  $(BUILD_DIR)/resume_with_image_en.pdf
-no_image_en:    $(BUILD_DIR)/resume_no_image_en.pdf
-with_image_fr:  $(BUILD_DIR)/resume_with_image_fr.pdf
-no_image_fr:    $(BUILD_DIR)/resume_no_image_fr.pdf
+default: $(addprefix $(BUILD_DIR)/resume_default_,$(addsuffix .pdf,$(VARIANTS)))
+	@printf "$(BLUE)$(NAME): $(GREEN)Default style built [√]$(RESET)\n"
+
+tech: $(addprefix $(BUILD_DIR)/resume_tech_,$(addsuffix .pdf,$(VARIANTS)))
+	@printf "$(BLUE)$(NAME): $(GREEN)Tech style built [√]$(RESET)\n"
+
+# Single variant, e.g. `make tech_no_image_fr`
+$(foreach s,$(STYLES),$(addprefix $(s)_,$(VARIANTS))): %: $(BUILD_DIR)/resume_%.pdf
 
 # ===== Content generation: YAML → LaTeX =====
 generate: $(PERSONAL_TEX) $(CONTENT_EN) $(CONTENT_FR)
@@ -101,10 +103,8 @@ $(BUILD_DIR)/resume_$(1).pdf: $(BUILD_DIR)/resume_$(1).tex $(2) | $(BUILD_DIR) $
 	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Built → $$@ [√]$(RESET)\n"
 endef
 
-$(eval $(call compile_rule,with_image_en,$(EN_SOURCES) $(WITH_IMAGE_SOURCES)))
-$(eval $(call compile_rule,no_image_en,$(EN_SOURCES) $(NO_IMAGE_SOURCES)))
-$(eval $(call compile_rule,with_image_fr,$(FR_SOURCES) $(WITH_IMAGE_SOURCES)))
-$(eval $(call compile_rule,no_image_fr,$(FR_SOURCES) $(NO_IMAGE_SOURCES)))
+$(foreach s,$(STYLES),$(foreach img,with_image no_image,$(foreach l,en fr,\
+  $(eval $(call compile_rule,$(s)_$(img)_$(l),$(if $(filter en,$(l)),$(EN_SOURCES),$(FR_SOURCES)) $(if $(filter tech,$(s)),$(TECH_SOURCES),$(DEFAULT_SOURCES)) src/layout/$(s)/header_$(img).tex)))))
 
 # Ensure dirs exist
 $(BUILD_DIR):

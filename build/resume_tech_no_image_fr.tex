@@ -1,0 +1,22 @@
+\documentclass[11pt, a4paper]{article}
+
+% Style: tech | without photo | French
+
+% Personal info (generated from data/resume.yml) – must come before packages.tex
+\input{../src/content/personal.tex}
+
+% Do not define \includeimage to exclude image-related packages and tikz
+
+% Load configuration files
+\input{../src/config/packages.tex}
+\input{../src/config/style.tex}
+\input{../src/config/style_tech.tex}
+\input{../src/config/commands.tex}
+
+\begin{document}
+    \initdocument
+
+    \input{../src/layout/tech/header_no_image.tex}
+
+    \input{../src/content/resume_content_fr.tex}
+\end{document}

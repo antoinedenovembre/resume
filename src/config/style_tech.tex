@@ -1,0 +1,81 @@
+% ======================================================================
+% ============================ TECH STYLE ===============================
+% ======================================================================
+% Loaded after style.tex by the "tech" variants: overrides fonts, section
+% titles and the semantic entry commands to get a classic black & white
+% layout with a date column on the left.
+
+% Times-like font, plain black links
+\makeatletter
+\usepackage{newtxtext}
+\hypersetup{urlcolor=black, linkcolor=black}
+
+% Margins closer to a word-processor resume
+\geometry{top=1.2 cm, bottom=1.2 cm, left=1.3 cm, right=1.3 cm}
+
+% Section titles: uppercase, bold, thick full-width rule underneath
+\titleformat{\section}
+  {\needspace{4\baselineskip}\bfseries\large}
+  {}{0pt}{\MakeUppercase}[\vspace{-1.2ex}\rule{\linewidth}{1pt}]
+\titlespacing*{\section}{0pt}{1.4ex plus .3ex minus .2ex}{0.6ex plus .2ex minus .2ex}
+
+\setlength{\parskip}{0pt}
+
+% Width of the left date column and gap to the main column
+\newlength{\datecolwidth}
+\setlength{\datecolwidth}{2.4 cm}
+\newlength{\datecolgap}
+\setlength{\datecolgap}{0.3 cm}
+
+% Splits "start -- end" into two centered lines in the date column
+\def\splitperiod#1{\splitperiod@#1 -- \@nil}
+\def\splitperiod@#1 -- #2\@nil{%
+    #1\if\relax\detokenize{#2}\relax\else\ --\\\splitperiod@@#2\fi}
+\def\splitperiod@@#1 -- {#1}
+
+\newlength{\entrycolwidth}
+\newlength{\entryheadwidth}
+\newcommand{\entryhead}[3]{\textbf{#1 -- #2}\hskip1em\textit{#3}}
+
+\renewenvironment{resumeentry}[5][]{%
+    \setlength{\entrycolwidth}{\linewidth-\datecolwidth-\datecolgap}%
+    % use the short name (if any) when the full heading does not fit on one line
+    \settowidth{\entryheadwidth}{\entryhead{#2}{#3}{#4}}%
+    \def\entryname{#2}%
+    \ifdim\entryheadwidth>\entrycolwidth
+        \if\relax\detokenize{#1}\relax\else\def\entryname{#1}\fi
+    \fi
+    \par\noindent
+    \begin{minipage}[t]{\datecolwidth}%
+        \centering
+        \textbf{\splitperiod{#5}}
+    \end{minipage}%
+    \hspace{\datecolgap}%
+    \minipage[t]{\entrycolwidth}%
+        % location right-aligned, moved to its own line when it still does not fit
+        \textbf{\entryname{} -- #3}\unskip\nobreak\hfill\penalty50\hskip1em\null\nobreak\hfill\mbox{\textit{#4}}\par
+}{%
+    \endminipage
+    \par\vspace{0.8em}
+}
+
+\renewenvironment{resumehighlights}{%
+    \begin{itemize}[
+        label=\textbullet,
+        topsep=0.15em,
+        partopsep=0pt,
+        parsep=0pt,
+        itemsep=0.1em,
+        leftmargin=0.55 cm
+    ]
+}{%
+    \end{itemize}
+}
+
+% Skills: plain lines with bold labels
+\renewenvironment{resumeskills}{\raggedright}{}
+
+\renewcommand{\resumeskill}[2]{%
+    \textbf{#1} #2\par
+}
+\makeatother

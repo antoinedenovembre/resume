@@ -44,6 +44,7 @@ en:
 
   education:
     - institution: "Télécom Saint-Étienne"
+      short_name: "TSE"
       location: "Saint-Étienne, France"
       period: "Sep 2022 -- Aug 2025"
       degree: "Master of Engineering in Imaging, Photonics and Smart Industries"
@@ -52,6 +53,7 @@ en:
         - "**Work-study programme:** Apprenticeship with Safety Tech in Brignais, France"
 
     - institution: "Université du Québec à Chicoutimi"
+      short_name: "UQAC"
       location: "Chicoutimi, Canada"
       period: "Jan 2022 -- May 2022"
       degree: "Exchange semester in Computer Science"
@@ -59,6 +61,7 @@ en:
         - "**Relevant coursework:** Calculus II, Data Mining (in Python)"
 
     - institution: "Université Clermont Auvergne"
+      short_name: "UCA"
       location: "Clermont-Ferrand, France"
       period: "Sep 2020 -- Jul 2022"
       degree: "Associate's degree in Computer Science"
@@ -103,6 +106,7 @@ fr:
 
   education:
     - institution: "Télécom Saint-Étienne"
+      short_name: "TSE"
       location: "Saint-Étienne, France"
       period: "Sept 2022 -- Août 2025"
       degree: "Diplôme d'ingénieur en Image, Photonique et Smart Industries"
@@ -111,6 +115,7 @@ fr:
         - "**Rythme :** Alternance avec Safety Tech à Brignais, France"
 
     - institution: "Université du Québec à Chicoutimi"
+      short_name: "UQAC"
       location: "Chicoutimi, Canada"
       period: "Janv 2022 -- Mai 2022"
       degree: "Semestre d'échange de DUT Informatique"
@@ -118,6 +123,7 @@ fr:
         - "**Cours principaux :** Calcul avancé II, Forage de données (en Python)"
 
     - institution: "Université Clermont Auvergne"
+      short_name: "UCA"
       location: "Clermont-Ferrand, France"
       period: "Sept 2020 -- Juil 2022"
       degree: "DUT en Informatique"

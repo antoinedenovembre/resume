@@ -1,5 +1,7 @@
 \documentclass[10pt, a4paper]{article}
 
+% Style: default | with photo | French
+
 % Personal info (generated from data/resume.yml) – must come before packages.tex
 \input{../src/content/personal.tex}
 
@@ -14,9 +16,7 @@
 \begin{document}
     \initdocument
 
-    % Include header with image
-    \input{../src/layout/header_with_image.tex}
+    \input{../src/layout/default/header_with_image.tex}
 
-    % Include resume content
-    \input{../src/content/resume_content_en.tex}
+    \input{../src/content/resume_content_fr.tex}
 \end{document}
