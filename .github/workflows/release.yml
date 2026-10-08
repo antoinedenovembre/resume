@@ -52,6 +52,10 @@ jobs:
 
       - name: Archive current "latest" as a dated version
         if: env.IS_MAIN_LATEST == 'true'
+        env:
+          # The default GITHUB_TOKEN cannot tag commits that touch .github/workflows (HTTP 403),
+          # so the dated tag is created with a PAT (contents + workflow scopes).
+          GITHUB_TOKEN: ${{ secrets.ARCHIVE_TOKEN }}
         run: |
           if gh release view latest >/dev/null 2>&1; then
             PREV_SHA=$(gh release view latest --json targetCommitish -q .targetCommitish)
@@ -67,7 +71,7 @@ jobs:
             mkdir -p archive
             gh release download latest --dir archive --clobber
             gh release create "$VERSION" \
-              --target "${{ github.event.workflow_run.head_sha }}" \
+              --target "$PREV_SHA" \
               --title "Resume $VERSION" \
               --notes "Automatic dated snapshot of the resume that was previously published as \"latest\" (commit $PREV_SHA)." \
               archive/*
