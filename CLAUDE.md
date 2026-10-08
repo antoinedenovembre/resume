@@ -49,15 +49,15 @@ macros (`resumeentry`, `resumehighlights`, `resumeskillssection`, `resumeskills`
 ## YAML structure
 ```yaml
 personal:          # contact info → src/content/personal.tex
-  name, location, email, phone_display, phone_tel,
+  name, email, phone_display, phone_tel,
   website_url, website_display, linkedin_url, linkedin_display,
   github_url, github_display
 
 en:                # English resume content
-  experience, education, skills
+  summary (tech style only), experience, education, skills
 
 fr:                # French resume content
-  experience, education, skills
+  summary (tech style only), experience, education, skills
 ```
 
 Inline formatting in YAML values: `**bold**` → `\textbf{}`, `_italic_` → `\textit{}`
