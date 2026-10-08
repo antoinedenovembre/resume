@@ -91,7 +91,7 @@ def generate_tex(data: dict, lang: str = 'en') -> str:
     skills = data.get('skills', {})
     if skills:
         section_title = 'Skills and Interests' if lang == 'en' else 'Compétences et intérêts'
-        lines.append(f'    \\section{{{section_title}}}')
+        lines.append(f'    \\resumeskillssection{{{section_title}}}')
 
         # French typography uses a space before the colon
         colon = ':' if lang == 'en' else ' :'

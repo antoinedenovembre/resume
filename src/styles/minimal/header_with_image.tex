@@ -1,0 +1,19 @@
+% ======================================================================
+% ==================== MINIMAL HEADER WITH PHOTO =======================
+% ======================================================================
+% Same as the no-photo header, with a round photo on the right
+
+\noindent
+\begin{minipage}[c]{\linewidth-2.6cm}
+    {\fontsize{26pt}{30pt}\fontseries{l}\selectfont\PersonName}\par
+    \vspace{0.5em}
+    \minimalcontacts
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{2.3cm}
+    \begin{tikzpicture}
+        \clip (0,0) circle (1.15cm);
+        \node[inner sep=0pt] at (0,0) {\includegraphics[width=2.3cm]{\ResumeRoot assets/photo.jpg}};
+    \end{tikzpicture}
+\end{minipage}\par
+\vspace{0.6em}

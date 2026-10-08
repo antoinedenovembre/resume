@@ -1,17 +1,18 @@
 # ===== Pretty, quiet LaTeX CV Makefile =====
-.PHONY: all en fr default tech generate clean clean-all re test logs tail-%
 
 # ===== Project =====
 NAME        = resume
 BUILD_DIR   = build
 LOG_DIR     := $(abspath $(BUILD_DIR)/logs)
 
-# All doc basenames (without .tex/.pdf)
-STYLES      = default tech
+# Styles live in src/styles/<style>/, root files in build/<style>/resume_<variant>.tex
+STYLES      = default tech minimal sidebar
 VARIANTS    = with_image_en no_image_en with_image_fr no_image_fr
-DOCS        = $(foreach s,$(STYLES),$(addprefix resume_$(s)_,$(VARIANTS)))
 
-PDFS        = $(addprefix $(BUILD_DIR)/,$(addsuffix .pdf,$(DOCS)))
+# All PDFs: build/<style>/resume_<variant>.pdf
+PDFS        = $(foreach s,$(STYLES),$(foreach v,$(VARIANTS),$(BUILD_DIR)/$(s)/resume_$(v).pdf))
+
+.PHONY: all en fr $(STYLES) generate clean clean-all re test logs tail-%
 
 # ===== Colors =====
 BLACK        = \033[0;30m
@@ -49,30 +50,22 @@ COMMON_SOURCES = src/config/packages.tex \
                  src/config/commands.tex \
                  $(PERSONAL_TEX)
 
-FR_SOURCES = $(COMMON_SOURCES) $(CONTENT_FR)
-EN_SOURCES = $(COMMON_SOURCES) $(CONTENT_EN)
-
-DEFAULT_SOURCES = src/config/style.tex
-TECH_SOURCES    = src/config/style.tex src/config/style_tech.tex
-
 # ===== Default targets =====
-all: en fr
+all: $(PDFS)
+	@printf "$(BLUE)$(NAME): $(GREEN)All resumes built [√]$(RESET)\n"
 
-# Grouped builds
-en: $(foreach s,$(STYLES),$(BUILD_DIR)/resume_$(s)_with_image_en.pdf $(BUILD_DIR)/resume_$(s)_no_image_en.pdf)
-	@printf "$(BLUE)$(NAME): $(GREEN)English resumes built [√]$(RESET)\n"
+# One language, every style: `make en`, `make fr`
+en fr:
+	@$(MAKE) --no-print-directory $(filter %_$@.pdf,$(PDFS))
+	@printf "$(BLUE)$(NAME): $(GREEN)$@ resumes built [√]$(RESET)\n"
 
-fr: $(foreach s,$(STYLES),$(BUILD_DIR)/resume_$(s)_with_image_fr.pdf $(BUILD_DIR)/resume_$(s)_no_image_fr.pdf)
-	@printf "$(BLUE)$(NAME): $(GREEN)French resumes built [√]$(RESET)\n"
+# One style, every variant: `make tech`
+$(STYLES): %: $(foreach v,$(VARIANTS),$(BUILD_DIR)/%/resume_$(v).pdf)
+	@printf "$(BLUE)$(NAME): $(GREEN)$@ style built [√]$(RESET)\n"
 
-default: $(addprefix $(BUILD_DIR)/resume_default_,$(addsuffix .pdf,$(VARIANTS)))
-	@printf "$(BLUE)$(NAME): $(GREEN)Default style built [√]$(RESET)\n"
-
-tech: $(addprefix $(BUILD_DIR)/resume_tech_,$(addsuffix .pdf,$(VARIANTS)))
-	@printf "$(BLUE)$(NAME): $(GREEN)Tech style built [√]$(RESET)\n"
-
-# Single variant, e.g. `make tech_no_image_fr`
-$(foreach s,$(STYLES),$(addprefix $(s)_,$(VARIANTS))): %: $(BUILD_DIR)/resume_%.pdf
+# One variant: `make tech_no_image_fr`
+$(foreach s,$(STYLES),$(foreach v,$(VARIANTS),$(s)_$(v))):
+	@$(MAKE) --no-print-directory $(BUILD_DIR)/$(firstword $(subst _, ,$@))/resume_$(subst $(firstword $(subst _, ,$@))_,,$@).pdf
 
 # ===== Content generation: YAML → LaTeX =====
 generate: $(PERSONAL_TEX) $(CONTENT_EN) $(CONTENT_FR)
@@ -93,23 +86,18 @@ $(CONTENT_FR): $(DATA_FILE) scripts/generate_tex.py
 	@$(PYTHON) scripts/generate_tex.py $(DATA_FILE) $(CONTENT_FR) fr
 	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Generated → $(CONTENT_FR) [√]$(RESET)\n"
 
-# ===== Compile rule macro =====
-# Usage: $(eval $(call compile_rule,<variant>,<sources>))
-define compile_rule
-$(BUILD_DIR)/resume_$(1).pdf: $(BUILD_DIR)/resume_$(1).tex $(2) | $(BUILD_DIR) $(LOG_DIR)
-	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)resume_$(1).tex → resume_$(1).pdf$(RESET)"
-	@cd $(BUILD_DIR) && $(LATEXMK) $(LATEX_FLAGS) resume_$(1).tex > "$(LOG_DIR)/resume_$(1).log" 2>&1
-	@cd $(BUILD_DIR) && $(LATEXMK) -c resume_$(1).tex > /dev/null 2>&1
-	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Built → $$@ [√]$(RESET)\n"
-endef
-
-$(foreach s,$(STYLES),$(foreach img,with_image no_image,$(foreach l,en fr,\
-  $(eval $(call compile_rule,$(s)_$(img)_$(l),$(if $(filter en,$(l)),$(EN_SOURCES),$(FR_SOURCES)) $(if $(filter tech,$(s)),$(TECH_SOURCES),$(DEFAULT_SOURCES)) src/layout/$(s)/header_$(img).tex)))))
-
-# Ensure dirs exist
-$(BUILD_DIR):
-	@mkdir -p $(BUILD_DIR)
-	@printf "$(BLUE)$(NAME): $(GREEN)Ensured $(BUILD_DIR)/ exists$(RESET)\n"
+# ===== Compile rule =====
+# build/<style>/resume_<img>_<lang>.pdf depends on its root file, the shared
+# config, the style folder and the generated content of its language.
+.SECONDEXPANSION:
+$(BUILD_DIR)/%.pdf: $(BUILD_DIR)/%.tex $(COMMON_SOURCES) \
+                    $$(wildcard src/styles/$$(*D)/*.tex) \
+                    src/content/resume_content_$$(lastword $$(subst _, ,$$*)).tex | $(LOG_DIR)
+	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)$*.tex → $*.pdf$(RESET)"
+	@cd $(@D) && $(LATEXMK) $(LATEX_FLAGS) $(notdir $*).tex > "$(LOG_DIR)/$(subst /,_,$*).log" 2>&1 \
+		|| { printf "\n$(RED)$(NAME): $* failed, see $(LOG_DIR)/$(subst /,_,$*).log$(RESET)\n"; exit 1; }
+	@cd $(@D) && $(LATEXMK) -c $(notdir $*).tex > /dev/null 2>&1
+	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Built → $@ [√]$(RESET)\n"
 
 $(LOG_DIR):
 	@mkdir -p $(LOG_DIR)
@@ -117,15 +105,15 @@ $(LOG_DIR):
 # ===== Cleaning =====
 clean:
 	@printf "$(BLUE)$(NAME): $(YELLOW)Cleaning auxiliary files$(RESET)\n"
-	@cd $(BUILD_DIR) 2>/dev/null && for f in $(DOCS); do \
-		$(LATEXMK) -c $$f.tex >/dev/null 2>&1 || true ; \
-	done || true
-	@rm -f $(BUILD_DIR)/*.synctex.gz
+	@for s in $(STYLES); do for v in $(VARIANTS); do \
+		(cd $(BUILD_DIR)/$$s && $(LATEXMK) -c resume_$$v.tex >/dev/null 2>&1) || true ; \
+	done; done
+	@rm -f $(BUILD_DIR)/*/*.synctex.gz
 	@printf "$(BLUE)$(NAME): $(GREEN)Done.$(RESET)\n"
 
 clean-all: clean
 	@printf "$(BLUE)$(NAME): $(YELLOW)Removing PDFs and generated content$(RESET)\n"
-	@rm -f $(BUILD_DIR)/*.pdf
+	@rm -f $(PDFS)
 	@rm -f $(PERSONAL_TEX) $(CONTENT_EN) $(CONTENT_FR)
 	@printf "$(BLUE)$(NAME): $(GREEN)Done.$(RESET)\n"
 
@@ -137,6 +125,6 @@ logs:
 	@ls -1 "$(LOG_DIR)" 2>/dev/null | sed 's/^/  - /' || echo "  (no logs yet)"
 
 # Tail last 50 lines of a specific log:
-#   make tail-resume_no_image_en
+#   make tail-tech_resume_no_image_en
 tail-%:
 	@tail -n 50 "$(LOG_DIR)/$*.log"

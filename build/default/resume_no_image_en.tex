@@ -1,0 +1,25 @@
+\documentclass[10pt, a4paper]{article}
+
+% Style: default | without photo | English
+
+% Path from this file to the repository root
+\def\ResumeRoot{../../}
+
+% Personal info (generated from data/resume.yml) – must come before packages.tex
+\input{\ResumeRoot src/content/personal.tex}
+
+% Do not define \includeimage to exclude image-related packages and tikz
+
+% Shared configuration, then the style's overrides
+\input{\ResumeRoot src/config/packages.tex}
+\input{\ResumeRoot src/config/style.tex}
+\input{\ResumeRoot src/styles/default/style.tex}
+\input{\ResumeRoot src/config/commands.tex}
+
+\begin{document}
+    \initdocument
+
+    \input{\ResumeRoot src/styles/default/header_no_image.tex}
+
+    \input{\ResumeRoot src/content/resume_content_en.tex}
+\end{document}

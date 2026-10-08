@@ -1,0 +1,15 @@
+% ======================================================================
+% ==================== SIDEBAR HEADER WITH PHOTO =======================
+% ======================================================================
+% Round photo at the top of the sidebar, see style.tex
+
+\renewcommand{\sidebarphoto}{%
+    \begin{center}
+        \begin{tikzpicture}
+            \clip (0,0) circle (1.6cm);
+            \node[inner sep=0pt] at (0,0) {\includegraphics[width=3.2cm]{\ResumeRoot assets/photo.jpg}};
+        \end{tikzpicture}
+    \end{center}
+    \vspace{0.6em}
+}
+\placesidebar

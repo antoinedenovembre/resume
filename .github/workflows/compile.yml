@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        style: [default, tech]
+        style: [default, tech, minimal, sidebar]
         variant: [with_image_en, with_image_fr, no_image_en, no_image_fr]
 
     steps:
@@ -37,13 +37,13 @@ jobs:
       - name: Compile resume (${{ matrix.style }}_${{ matrix.variant }})
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: resume_${{ matrix.style }}_${{ matrix.variant }}.tex
-          working_directory: build
+          root_file: resume_${{ matrix.variant }}.tex
+          working_directory: build/${{ matrix.style }}
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
           name: pdf-${{ matrix.style }}_${{ matrix.variant }}
-          path: build/resume_${{ matrix.style }}_${{ matrix.variant }}.pdf
+          path: build/${{ matrix.style }}/resume_${{ matrix.variant }}.pdf
           retention-days: 30
