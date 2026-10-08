@@ -108,13 +108,7 @@ The project uses a modular LaTeX architecture for better maintainability:
 ## Versioning
 
 - **Latest Release**: Always contains the most recent compiled PDFs
-- **Tagged Releases**: Create a git tag (e.g., `v1.0`) to create a permanent versioned release
-
-```bash
-# Create a versioned release
-git tag v1.0
-git push origin v1.0
-```
+- **Dated Archives**: Each time `latest` is replaced, the previous one is kept as a dated release (e.g. `v2026.10.08-171631`)
 
 ## LaTeX Packages Used
 

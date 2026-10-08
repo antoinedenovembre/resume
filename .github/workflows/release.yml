@@ -15,11 +15,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event != 'pull_request' }}
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # head_branch holds the tag name (not "refs/tags/...") for tag-triggered runs; this
-      # is undocumented GitHub behavior and only a best-effort signal. Moot today anyway:
-      # compile.yml has no `push: tags:` trigger, so this condition never evaluates true.
       IS_MAIN_LATEST: ${{ github.event.workflow_run.head_branch == 'main' && (github.event.workflow_run.event == 'push' || github.event.workflow_run.event == 'workflow_dispatch') }}
-      IS_TAG: ${{ github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch != 'main' && github.event.workflow_run.head_branch != 'latest' }}
 
     steps:
       - name: Checkout repository
@@ -93,14 +89,4 @@ jobs:
           files: resume-with-image-en.pdf,resume-no-image-en.pdf,resume-with-image-fr.pdf,resume-no-image-fr.pdf,resume_en.pdf,resume_fr.pdf
           draft: false
           prerelease: false
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create tagged release
-        if: env.IS_TAG == 'true'
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.event.workflow_run.head_branch }}
-          target_commitish: ${{ github.event.workflow_run.head_sha }}
-          files: resume-with-image-en.pdf,resume-no-image-en.pdf,resume-with-image-fr.pdf,resume-no-image-fr.pdf,resume_en.pdf,resume_fr.pdf
-          draft: false
           token: ${{ secrets.GITHUB_TOKEN }}
