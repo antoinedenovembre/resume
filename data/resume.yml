@@ -48,7 +48,7 @@ en:
       period: "Sep 2022 -- Aug 2025"
       degree: "Master of Engineering in Imaging, Photonics and Smart Industries"
       highlights:
-        - "**Relevant coursework:** Deep Learning (in Python), Image Processing, 3D Imaging"
+        - "**Notable coursework:** Deep Learning (in Python), Image Processing, 3D Imaging"
         - "**Work-study programme:** Apprenticeship with Safety Tech in Brignais, France"
 
     - institution: "Université du Québec à Chicoutimi"
@@ -57,7 +57,7 @@ en:
       period: "Jan 2022 -- May 2022"
       degree: "Exchange semester in Computer Science"
       highlights:
-        - "**Relevant coursework:** Calculus II, Data Mining (in Python)"
+        - "**Notable coursework:** Calculus II, Data Mining (in Python)"
 
     - institution: "Université Clermont Auvergne"
       short_name: "UCA"
@@ -65,7 +65,7 @@ en:
       period: "Sep 2020 -- Jul 2022"
       degree: "Associate's degree in Computer Science"
       highlights:
-        - "**Relevant coursework:** OOP, C++ programming, Advanced algorithms"
+        - "**Notable coursework:** OOP, C++ programming, Advanced algorithms"
 
   skills:
     languages: "French (native), English (C1, TOEIC 990/990)"
