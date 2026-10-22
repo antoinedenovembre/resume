@@ -73,17 +73,17 @@ generate: $(PERSONAL_TEX) $(CONTENT_EN) $(CONTENT_FR)
 
 $(PERSONAL_TEX): $(DATA_FILE) scripts/generate_tex.py
 	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)$(DATA_FILE) → $(PERSONAL_TEX)$(RESET)"
-	@$(PYTHON) scripts/generate_tex.py $(DATA_FILE) $(PERSONAL_TEX) personal
+	@$(PYTHON) scripts/generate_tex.py $(DATA_FILE) $(PERSONAL_TEX) personal > /dev/null
 	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Generated → $(PERSONAL_TEX) [√]$(RESET)\n"
 
 $(CONTENT_EN): $(DATA_FILE) scripts/generate_tex.py
 	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)$(DATA_FILE) → $(CONTENT_EN)$(RESET)"
-	@$(PYTHON) scripts/generate_tex.py $(DATA_FILE) $(CONTENT_EN) en
+	@$(PYTHON) scripts/generate_tex.py $(DATA_FILE) $(CONTENT_EN) en > /dev/null
 	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Generated → $(CONTENT_EN) [√]$(RESET)\n"
 
 $(CONTENT_FR): $(DATA_FILE) scripts/generate_tex.py
 	@printf "\033[2K\r$(BLUE)$(NAME): $(PURPLE)$(DATA_FILE) → $(CONTENT_FR)$(RESET)"
-	@$(PYTHON) scripts/generate_tex.py $(DATA_FILE) $(CONTENT_FR) fr
+	@$(PYTHON) scripts/generate_tex.py $(DATA_FILE) $(CONTENT_FR) fr > /dev/null
 	@printf "\033[2K\r$(BLUE)$(NAME): $(GREEN)Generated → $(CONTENT_FR) [√]$(RESET)\n"
 
 # ===== Compile rule =====
