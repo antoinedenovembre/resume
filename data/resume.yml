@@ -31,7 +31,10 @@ en:
       highlights:
         - "Integrated cross-compiled software into a **Buildroot** Linux image and an **RTOS** for a hybrid embedded target (Cortex-A, Cortex-R), using **Docker** and **CMake**"
         - "Developed **C/C++** software applying design patterns, and automated tasks with **Bash** scripts"
+        - "Maintained embedded devices (serial/SSH access, **flashing**)"
         - "Designed and maintained **GitLab CI/CD** pipelines automating build, test and deployment"
+        - "Implemented **CAN**, **Ethernet** and **MQTT** communication"
+        - "Took part in and facilitated **Scrum** ceremonies in an industrial project following the **V-model**"
 
     - company: "NTNU Gjøvik"
       location: "Gjøvik, Norway"
@@ -93,7 +96,10 @@ fr:
       highlights:
         - "Intégration de logiciels cross-compilés dans une image Linux **Buildroot** et un **RTOS** pour une cible embarquée hybride (Cortex-A, Cortex-R), avec **Docker** et **CMake**"
         - "Développement **C/C++** s'appuyant sur des _design patterns_ et automatisation de tâches par scripts **Bash**"
+        - "Maintenance de cibles embarquées (accès série/SSH, **flashage**)"
         - "Conception et maintenance de pipelines **GitLab CI/CD** (compilation, tests, déploiement)"
+        - "Mise en œuvre de communications **CAN**, **Ethernet** et **MQTT**"
+        - "Participation aux rituels **Scrum** et animation de ceux-ci, dans un projet industriel en **cycle en V**"
 
     - company: "NTNU Gjøvik"
       location: "Gjøvik, Norvège"
