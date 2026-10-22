@@ -18,7 +18,7 @@ A clean, modular LaTeX resume with multilingual support (French & English) and t
 - **All versions:** [Latest Release](https://github.com/antoinedenovembre/resume/releases/latest)
 
 ### Download a style (zip with the 4 variants: with/without photo × FR/EN)
-[Default](https://github.com/antoinedenovembre/resume/releases/latest/download/resume-default.zip) · [Tech](https://github.com/antoinedenovembre/resume/releases/latest/download/resume-tech.zip) · [Sidebar](https://github.com/antoinedenovembre/resume/releases/latest/download/resume-sidebar.zip)
+[Default](https://github.com/antoinedenovembre/resume/releases/latest/download/resume-default.zip) · [Tech](https://github.com/antoinedenovembre/resume/releases/latest/download/resume-tech.zip)
 
 ## Editing on Mobile (or anywhere)
 
@@ -39,17 +39,17 @@ Go to **[Actions → Compile Resume](../../actions/workflows/compile.yml)** and 
 
 Every style is generated from the same `data/resume.yml`, in 4 variants (with/without photo × FR/EN). Previews below: French, with photo.
 
-| Default | Tech | Sidebar |
-|:---:|:---:|:---:|
-| <img src="assets/previews/preview_default.png" alt="Default style" width="100%"/> | <img src="assets/previews/preview_tech.png" alt="Tech style" width="100%"/> | <img src="assets/previews/preview_sidebar.png" alt="Sidebar style" width="100%"/> |
-| Original layout, icons, blue accents | Times font, ruled uppercase sections, date column on the left | Colored left column with photo, contacts and skills |
+| Default | Tech |
+|:---:|:---:|
+| <img src="assets/previews/preview_default.png" alt="Default style" width="100%"/> | <img src="assets/previews/preview_tech.png" alt="Tech style" width="100%"/> |
+| Original layout, icons, blue accents | Times font, ruled uppercase sections, date column on the left |
 
 ## How it works
 
 ```mermaid
 flowchart LR
     A["Edit\ndata/resume.yml"] -->|git push| B["GitHub Actions"]
-    B --> C["Compile 12 PDFs\n3 styles × EN/FR × photo/no-photo"]
+    B --> C["Compile 8 PDFs\n2 styles × EN/FR × photo/no-photo"]
     C --> D["Generate PNG previews\n→ commit to assets/previews/"]
     C --> E["Publish GitHub Release\none zip per style"]
     D --> F["GitHub Pages\nauto-updated"]

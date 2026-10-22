@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        style: [default, tech, sidebar]
+        style: [default, tech]
         variant: [with_image_en, with_image_fr, no_image_en, no_image_fr]
 
     steps:
